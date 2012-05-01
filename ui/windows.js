@@ -11,11 +11,14 @@ exports.Windows = function() {
 		style : Titanium.UI.iPhone.SystemButtonStyle.BORDERED
 	});
 	
+	// include the titleControl script
+	var TitleStyle = require('ui/titleStyle').TitleControl;
+	
 	var windows = {
 		login :  Ti.UI.createWindow({  
 		    title : 'Login',
 		    backgroundColor : '#eee',
-		    width : '100%'
+		    width : '100%'		    
 		}),
 		navWindowMap : Ti.UI.createWindow({ 
 			navBarHidden : true, 
@@ -31,13 +34,15 @@ exports.Windows = function() {
 			title : 'Happy Hour Map', 
 			rightNavButton : infoButton,
 			barColor: '#000',
-			backgroundColor : 'green'
+			backgroundColor : 'green',
+			titleControl : new TitleStyle('Happy Hour Map')
 		}),
 		venues : Ti.UI.createWindow({
 			title : 'Venues',
 			rightNavButton : addButton,
 			barColor: '#000',
-			backgroundColor : 'blue'
+			backgroundColor : 'blue',
+			titleControl : new TitleStyle('Venues')
 		})
 	};
 	// return the default windows

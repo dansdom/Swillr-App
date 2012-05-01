@@ -11,7 +11,7 @@ exports.Tabs = function(windows, nav) {
 		}),
 		venues : Ti.UI.createTab({  
 		    icon : 'img/light/light_list.png',
-		    title : 'Venues',
+		    title : 'Venues',		    
 		    window : windows.navWindowVenues
 		}),
 		// create tab group

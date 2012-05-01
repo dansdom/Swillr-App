@@ -1,5 +1,5 @@
 // mopdule that generates the friends list
-exports.AddEvent = function(nav, tabs, location) {
+exports.AddDeal = function(nav, tabs, location) {
 	
 	//Ti.API.log(location);
 	var cancelButton = Titanium.UI.createButton({
@@ -8,7 +8,7 @@ exports.AddEvent = function(nav, tabs, location) {
 	});
 	
 	var page = Ti.UI.createWindow({
-		title : 'Add Event',
+		title : 'Add Deal',
 		backButtonTitle : 'back',
 		rightNavButton : cancelButton,
 		barColor: '#000',
@@ -23,37 +23,39 @@ exports.AddEvent = function(nav, tabs, location) {
   		height : '100%',
   		width : '100%',	
 		backgroundColor : '#ccc'
-	});
+	})
+	
 	
 	// add the form to the page
-	var eventForm = require('libs/forms');
-	var eventFields = [
-		{title : 'Day:', type : 'picker', id : 'day', data : ['Monay', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']},
-		{title : 'Start:', type : 'time', id : 'start'},
-		{title : 'End:', type : 'time', id : 'end'},
-		{title : 'Create Event', type : 'submit', id : 'createEvent'}
+	var dealForm = require('libs/forms');
+	var dealFields = [
+		{title : 'Title:', type : 'text', id : 'title'},
+		{title : 'Save Deal', type : 'submit', id : 'createDeal'}		
 	];
 	
-	var eventForm = eventForm.createForm({
-		style : eventForm.STYLE_LABEL,
-		fields : eventFields,
+	var dealForm = dealForm.createForm({
+		style : dealForm.STYLE_LABEL,
+		fields : dealFields,
 		width : 'auto',
 		backgroundColor : 'blue'
 	});
 	
-	eventForm.addEventListener('createEvent', function(e) {
+	dealForm.addEventListener('createDeal', function(e) {
 		Ti.API.log(e);
-		alert('saving event');
+		alert('saving deal');
 	});
 	
-	pageView.add(eventForm);
+	pageView.add(dealForm);
 	
-	// add event listeners for the buttons
+	
+	// button event listeners
 	cancelButton.addEventListener('click', function() {
 		// cancel the edit action and remove it from the stack
 		nav.venuesWindowStack.pop(page);
 		nav.venues.close(page);
 	});
+	
+	
 	
 	page.add(pageView);
 	// return the page

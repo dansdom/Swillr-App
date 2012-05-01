@@ -9,15 +9,16 @@ exports.TYPE_PASSWORD = 'password';
 exports.TYPE_PHONE = 'phone';
 exports.TYPE_PICKER = 'picker';
 exports.TYPE_TEXT = 'text';
+exports.TYPE_TIME = 'time';
 exports.TYPE_SUBMIT = 'submit';
 
 var isAndroid = Ti.Platform.osname === 'android';
 var textFieldDefaults = {
-	height: '40dp',
-	width: '250dp',
-	top: '10dp',
-	color: '#222',
-	borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED
+	height : '40dp',
+	width : '250dp',
+	top : '10dp',
+	color : '#000',
+	borderStyle : Titanium.UI.INPUT_BORDERSTYLE_ROUNDED
 };
 var keyboardMap = {};
 keyboardMap[exports.TYPE_EMAIL] = Ti.UI.KEYBOARD_EMAIL;
@@ -31,16 +32,16 @@ var handleStyle = function(form, textField, title) {
 		textField.hintText = title;	
 	} else {
 		form.container.add(Ti.UI.createLabel({
-			text: title,
-			top: '10dp',
-			left: '35dp',
-			color: '#222',
-			font: {
-				fontSize: '16dp',
-				fontWeight: 'bold'
+			text : title,
+			top : '10dp',
+			//left: '35dp',
+			color : '#222',
+			font : {
+				fontSize : '16dp',
+				fontWeight : 'bold'
 			},
-			height: 'auto',
-			width: 'auto'
+			height : 'auto',
+			width : 'auto'
 		}));	
 		if (textField) {
 			textField.top = '5dp';
@@ -58,12 +59,12 @@ var setupPickerTextField = function(textField, pickerType, data) {
 	
 	textField.addEventListener('focus', function(e) {
 		e.source.blur(); 
-		require('semiModalPicker').createSemiModalPicker({
-			textField: textField,
-			value: textField.value,
-			type: pickerType,
-			data: data
-		}).open({animated:true});
+		require('libs/semiModalPicker').createSemiModalPicker({
+			textField : textField,
+			value : textField.value,
+			type : pickerType,
+			data : data
+		}).open({animated : true});
 	});
 };
 
@@ -95,6 +96,17 @@ var addField = function(field, fieldRefs) {
 			handleStyle(form, fieldObject, title);
 			setupPickerTextField(fieldObject, Ti.UI.PICKER_TYPE_DATE);
 		}
+	} else if (type === exports.TYPE_TIME) {
+		if (isAndroid) {
+			fieldObject = Ti.UI.createPicker({
+				type: Ti.UI.PICKER_TYPE_TIME
+			});
+			handleStyle(form, undefined, title);
+		} else {
+			fieldObject = Ti.UI.createTextField(textFieldDefaults);
+			handleStyle(form, fieldObject, title);
+			setupPickerTextField(fieldObject, Ti.UI.PICKER_TYPE_TIME);
+		}
 	} else if (type === exports.TYPE_PICKER) {
 		if (isAndroid) {
 			fieldObject = Ti.UI.createPicker({
@@ -112,10 +124,11 @@ var addField = function(field, fieldRefs) {
 		}
 	} else if (type === exports.TYPE_SUBMIT) {
 		var button = Ti.UI.createButton({
-			title: title,
-			height: '40dp',
-			width: '100dp',
-			top:'10dp'
+			title : title,
+			height : '40dp',
+			width : '250dp',
+			top : '20dp',
+			bottom : '10dp'
 		});
 		button.addEventListener('click', function(e) {
 			var values = {};
@@ -131,6 +144,10 @@ var addField = function(field, fieldRefs) {
 	if (fieldObject) {
 		form.container.add(fieldObject);
 		fieldRefs[id] = fieldObject;
+		
+		fieldObject.addEventListener('blur', function() {
+			form.scrollTo(0,0);
+		});
 	}
 };
 
@@ -143,20 +160,19 @@ var addFields = function(fields, fieldRefs) {
 exports.createForm = function(o) {
 	var container = Ti.UI.createView({
 		layout: 'vertical',
-		height: 'auto'
+		height: 'auto',
+		top : 0
 	});
 	var fieldRefs = {};
 	var form = Ti.UI.createScrollView({
-		contentHeight: 'auto',
-		contentWidth: 'auto',
-		showVerticalScrollIndicator:true,
-		showHorizontalScrollIndicator:true,
-    	
+		contentHeight : 'auto',
+		contentWidth : 'auto',
+		showVerticalScrollIndicator : true,
 		// new stuff
-		container: container,
-		fieldStyle: o.style || exports.STYLE_HINT,
-		addField: addField,
-		addFields: addFields
+		container : container,
+		fieldStyle : o.style || exports.STYLE_HINT,
+		addField : addField,
+		addFields : addFields
 	});
 
 	form.addFields(o.fields, fieldRefs);

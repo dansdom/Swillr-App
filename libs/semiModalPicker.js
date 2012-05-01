@@ -11,6 +11,12 @@ var dateToString = function(date) {
 	return (date.getMonth()+1) + '/' + date.getDate() + '/' + date.getFullYear();
 };
 
+var timeToString = function(time) {
+	var timeString = time.toTimeString().split(' ')[0];
+	var hourMin = timeString.substring(0, 5);
+	return hourMin
+};
+
 exports.createSemiModalPicker = function(o) {
 	var type = o.type === undefined ? Ti.UI.PICKER_TYPE_PLAIN : o.type;
 	var modalWin = Ti.UI.createWindow({
@@ -31,9 +37,10 @@ exports.createSemiModalPicker = function(o) {
 		height: 'auto',
 		selectionIndicator: true
 	});
-	if (type === Ti.UI.PICKER_TYPE_DATE) {
+	
+	if (type === Ti.UI.PICKER_TYPE_DATE || type === Ti.UI.PICKER_TYPE_TIME) {
 		picker.value = stringToDate(o.value);
-	} else if (o.data) {
+	 } else if (o.data) {
 		for (var i in o.data) {
 			picker.add(Ti.UI.createPickerRow({title:o.data[i]}));	
 		}
@@ -58,13 +65,15 @@ exports.createSemiModalPicker = function(o) {
 		style:Titanium.UI.iPhone.SystemButtonStyle.BORDERED,
 		right: 10
 	});
+	
 	done.addEventListener('click', function(e) {
 		if (type === Ti.UI.PICKER_TYPE_DATE) {
 			o.textField.value = dateToString(picker.value);
+		} else if (type === Ti.UI.PICKER_TYPE_TIME) {
+			o.textField.value = timeToString(picker.value);
 		} else {
 			o.textField.value = picker.getSelectedRow(0).title;	
 		}
-		
 		modalWin.close();
 	});
 	 

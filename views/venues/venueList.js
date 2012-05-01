@@ -1,10 +1,6 @@
 // mopdule that generates the friends list
 exports.VenueList = function(nav, tabs, data) {
 
-	// get the data for the friends
-	//var list = require('data/contacts');
-	//Ti.API.log('hitting venue list');
-	//Ti.API.log(data.venues.length);
 	// this is the search index that sits on the side of the page
 	// index values are added for the first item of each letter which has the 'header' attribute
 	var searchIndex = [];
@@ -22,15 +18,17 @@ exports.VenueList = function(nav, tabs, data) {
 	
 	// data array to hold the sections of the table
 	sectionData = [];
-	
-	//Ti.API.log(data.length);
+	//Ti.API.log('hitting venue list');
+	//Ti.API.log(data.venues.length);
 	// cycle through the data and then create the item views for the venues
 	for (var i = 0; i < data.venues.length; i++) {
 		// get the first letter of each firstname
-		Ti.API.log(data.venues[i]);
+		//Ti.API.log(data.venues[i]);
 		var header = data.venues[i].title.charAt(0).toUpperCase();
+		//Ti.API.log(header);
 		// if it's a new letter group, then add a header attribute and set the index on the searchIndex
 		if (header != venueHeader) {
+			//Ti.API.log("header: " + header + ", venueHeader:" + venueHeader);
 			var sectionNumber = indexCounter;
 			// create a new section
 			sectionData[sectionNumber] = Ti.UI.createTableViewSection({
@@ -41,15 +39,15 @@ exports.VenueList = function(nav, tabs, data) {
 			
 			sectionData[sectionNumber].headerView = Ti.UI.createView({
 				layout : 'absolute',
-				backgroundColor : '#ddd',
-				height : '22dp'
+				backgroundColor : '#848484',
+				height : '24dp'
 			});
 			
 			var topLine = Ti.UI.createView({
 				height : '1dp',
 				width : '100%',
 				top : '0dp',
-				backgroundColor : '#fff'
+				backgroundColor : '#aaa'
 			});
 			var headerLabel = Ti.UI.createLabel({
 				text : header,
@@ -65,7 +63,7 @@ exports.VenueList = function(nav, tabs, data) {
 				height : '1dp',
 				width : '100%',
 				bottom : '0dp',
-				backgroundColor : '#c6c1b3'
+				backgroundColor : '#1d1d1d'
 			});
 			
 			sectionData[sectionNumber].headerView.add(topLine);
@@ -106,14 +104,14 @@ exports.VenueList = function(nav, tabs, data) {
 				top : '10dp',
 				left : '10dp',
 				color : '#666',
-				font : {fontWeight : 'bold', fontSize : '16dp', fontFamily : 'Museo'}
+				font : {fontSize : '16dp'}
 			}),
 			message : Ti.UI.createLabel({
 				text : data.venues[i].address,
 				color : '#666',
 				left : '10dp',
 				top : '0dp',			
-				font : {fontWeight : 'bold', fontSize : '12dp', fontFamily : 'Museo'},
+				font : {fontSize : '12dp'},
 				textAlign : 'left',
 				width : 'auto',
 				height : 'auto',
@@ -138,14 +136,15 @@ exports.VenueList = function(nav, tabs, data) {
 	
 	// add search bar at the top of the page
 	searchBar = Titanium.UI.createSearchBar({
-		showCancel : false,
+		showCancel : true,
 		hintText : 'Search for venues',
-		barColor : '#dad6cc'
+		barColor : '#000'
 	});
 	
 	// note: 
 	// 1. the filter attribute is what the search field will look at for each item
 	// 2. the index is the defined list of items on the right hand side of the page
+	//Ti.API.log(searchIndex);
 	tableView = Ti.UI.createTableView({
 		data : [],
 		search : searchBar,

@@ -3,9 +3,10 @@
 exports.DefaultViews = function(windows, nav, tabs) {
 	// get the rquest object
 	var Request = require('libs/httpRequest').HttpRequest;
-	var venuesLookup = 'http://swillr.com/venues/lookup/day.json';
-		
-	getVenueData = function(data) {
+	var venuesToday = 'http://swillr.com/venues/lookup/day.json';
+	var venuesAll = 'http://swillr.com/venues.json';
+	
+	getTodaysEvents = function(data) {
 		
 		makeMapView = function(position) {
 			var map = require('views/map/map').Map;
@@ -16,11 +17,16 @@ exports.DefaultViews = function(windows, nav, tabs) {
 		var Geo = require('libs/geolocation').Geo;
 		var geo = Geo(makeMapView);
 	
+	};
+	var dataToday = new Request('GET', venuesToday, getTodaysEvents);
+	
+	getAllVenues = function(data) {
+		Ti.API.log('got venues');
 		var venueList = require('views/venues/venueList').VenueList;
 		windows.venues.add(new venueList(nav, tabs, data));
-		
-		Ti.API.log('did window build');
 	};
-	var venueData = new Request('GET', venuesLookup, getVenueData);
+	
+	Ti.API.log('about to get venue data');
+	var dataAll = new Request('GET', venuesAll, getAllVenues);
 	
 };
