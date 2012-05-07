@@ -11,9 +11,9 @@ exports.VenueEdit = function(nav, tabs, location) {
 		title : 'Edit Venue',
 		backButtonTitle : 'back',
 		rightNavButton : cancelButton,
-		barColor: '#000',
-		backgroundColor : '#ddd',
-		backgroundColor : 'yellow'
+		barColor: '#1E0B02',
+		backgroundImage : 'img/bg.png',
+		backgroundRepeat : true
 	});
 	
 	var pageView = Ti.UI.createScrollView({
@@ -22,8 +22,7 @@ exports.VenueEdit = function(nav, tabs, location) {
   		contentHeight: 'auto',
   		showVerticalScrollIndicator: true,
   		height : '100%',
-  		width : '100%',	
-		backgroundColor : '#aaa'
+  		width : '100%'
 	});
 	
 	// add the form to the page
@@ -39,8 +38,7 @@ exports.VenueEdit = function(nav, tabs, location) {
 	var venueForm = venueForm.createForm({
 		style : venueForm.STYLE_LABEL,
 		fields : venueFields,
-		width : 'auto',
-		backgroundColor : 'blue'
+		width : 'auto'
 	});
 	
 	venueForm.addEventListener('saveVenue', function(e) {

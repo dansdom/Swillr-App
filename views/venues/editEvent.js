@@ -1,5 +1,5 @@
 // mopdule that generates the friends list
-exports.AddEvent = function(nav, tabs, location) {
+exports.EditEvent = function(nav, tabs, event) {
 	
 	//Ti.API.log(location);
 	var cancelButton = Titanium.UI.createButton({
@@ -8,7 +8,7 @@ exports.AddEvent = function(nav, tabs, location) {
 	});
 	
 	var page = Ti.UI.createWindow({
-		title : 'Add Event',
+		title : 'Edit Event',
 		backButtonTitle : 'back',
 		rightNavButton : cancelButton,
 		barColor: '#1E0B02',
@@ -31,7 +31,7 @@ exports.AddEvent = function(nav, tabs, location) {
 		{title : 'Day:', type : 'picker', id : 'day', data : ['Monay', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']},
 		{title : 'Start:', type : 'time', id : 'start'},
 		{title : 'End:', type : 'time', id : 'end'},
-		{title : 'Create Event', type : 'submit', id : 'createEvent'}
+		{title : 'Create Event', type : 'submit', id : 'saveEvent'}
 	];
 	
 	var eventForm = eventForm.createForm({
@@ -40,14 +40,14 @@ exports.AddEvent = function(nav, tabs, location) {
 		width : 'auto'
 	});
 	
-	eventForm.addEventListener('createEvent', function(e) {
+	eventForm.addEventListener('saveEvent', function(e) {
 		Ti.API.log(e);
-		alert('saving event');
+		//alert('saving event');
 	});
 	
 	pageView.add(eventForm);
 	
-	// add event listeners for the buttons
+	// button event listeners
 	cancelButton.addEventListener('click', function() {
 		// cancel the edit action and remove it from the stack
 		nav.venuesWindowStack.pop(page);

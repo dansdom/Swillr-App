@@ -18,7 +18,7 @@ exports.DefaultViews = function(windows, nav, tabs) {
 		var geo = Geo(makeMapView);
 	
 	};
-	var dataToday = new Request('GET', venuesToday, getTodaysEvents);
+	var dataToday = new Request('GET', venuesToday, null, getTodaysEvents);
 	
 	getAllVenues = function(data) {
 		Ti.API.log('got venues');
@@ -27,6 +27,6 @@ exports.DefaultViews = function(windows, nav, tabs) {
 	};
 	
 	Ti.API.log('about to get venue data');
-	var dataAll = new Request('GET', venuesAll, getAllVenues);
+	var dataAll = new Request('GET', venuesAll, null, getAllVenues);
 	
 };

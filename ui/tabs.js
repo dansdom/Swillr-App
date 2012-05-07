@@ -10,7 +10,7 @@ exports.Tabs = function(windows, nav) {
 		    window : windows.navWindowMap
 		}),
 		venues : Ti.UI.createTab({  
-		    icon : 'img/light/light_list.png',
+		    icon : 'img/light/light_list-add.png',
 		    title : 'Venues',		    
 		    window : windows.navWindowVenues
 		}),

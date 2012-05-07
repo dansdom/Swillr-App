@@ -39,7 +39,7 @@ exports.VenueList = function(nav, tabs, data) {
 			
 			sectionData[sectionNumber].headerView = Ti.UI.createView({
 				layout : 'absolute',
-				backgroundColor : '#848484',
+				backgroundColor : '#C8B9B2',
 				height : '24dp'
 			});
 			
@@ -47,7 +47,7 @@ exports.VenueList = function(nav, tabs, data) {
 				height : '1dp',
 				width : '100%',
 				top : '0dp',
-				backgroundColor : '#aaa'
+				backgroundColor : '#eee'
 			});
 			var headerLabel = Ti.UI.createLabel({
 				text : header,
@@ -55,7 +55,7 @@ exports.VenueList = function(nav, tabs, data) {
 				color : '#fff',
 				left : '10dp',
 				height : 'auto',
-				shadowColor : '#666',
+				shadowColor : '#777',
 				shadowOffset : {x:0, y:1},
 				font : {fontWeight : 'bold', fontSize : '18dp', fontFamily : 'Helvetica Neue'}
 			});
@@ -63,7 +63,7 @@ exports.VenueList = function(nav, tabs, data) {
 				height : '1dp',
 				width : '100%',
 				bottom : '0dp',
-				backgroundColor : '#1d1d1d'
+				backgroundColor : '#888'
 			});
 			
 			sectionData[sectionNumber].headerView.add(topLine);
@@ -85,7 +85,7 @@ exports.VenueList = function(nav, tabs, data) {
 			fontSize : 24,
 			color : '#000',
 			backgroundColor : '#fff',
-			selectedBackgroundColor : '#ddd'
+			selectedBackgroundColor : '#C8B9B2'
 		});
 
 		// define the view for the list
@@ -103,10 +103,10 @@ exports.VenueList = function(nav, tabs, data) {
 				height : 'auto',
 				top : '10dp',
 				left : '10dp',
-				color : '#666',
+				color : '#000',
 				font : {fontSize : '16dp'}
 			}),
-			message : Ti.UI.createLabel({
+			address : Ti.UI.createLabel({
 				text : data.venues[i].address,
 				color : '#666',
 				left : '10dp',
@@ -124,7 +124,7 @@ exports.VenueList = function(nav, tabs, data) {
 			}),
 			createView : function() {
 				this.itemText.add(this.from);
-				this.itemText.add(this.message);
+				this.itemText.add(this.address);
 				this.view.add(this.itemText);
 			}
 		};
@@ -138,7 +138,8 @@ exports.VenueList = function(nav, tabs, data) {
 	searchBar = Titanium.UI.createSearchBar({
 		showCancel : true,
 		hintText : 'Search for venues',
-		barColor : '#000'
+		barColor : '#561F06',
+		showCancel : false
 	});
 	
 	// note: 

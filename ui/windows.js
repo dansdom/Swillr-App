@@ -12,37 +12,38 @@ exports.Windows = function() {
 	});
 	
 	// include the titleControl script
-	var TitleStyle = require('ui/titleStyle').TitleControl;
+	//var TitleStyle = require('ui/titleStyle').TitleControl;
 	
 	var windows = {
 		login :  Ti.UI.createWindow({  
 		    title : 'Login',
-		    backgroundColor : '#eee',
+		    backgroundImage : 'img/bg.png',
+		    backgroundRepeat : true,
 		    width : '100%'		    
 		}),
 		navWindowMap : Ti.UI.createWindow({ 
 			navBarHidden : true, 
 		    title : 'map',
-		    backgroundColor : 'red'
+		    backgroundImage : 'im/bg.png',
+		    backgroundRepeat : true
 		}),
 		navWindowVenues : Ti.UI.createWindow({
 			navBarHidden : true,  
 		    title : 'venues',
-		    backgroundColor : 'green'
+		    backgroundImage : 'im/bg.png',
+		    backgroundRepeat : true
 		}),
 		map : Ti.UI.createWindow({
 			title : 'Happy Hour Map', 
 			rightNavButton : infoButton,
-			barColor: '#000',
-			backgroundColor : 'green',
-			titleControl : new TitleStyle('Happy Hour Map')
+			barColor: '#1E0B02'
+			//titleControl : new TitleStyle('Happy Hour Map')
 		}),
 		venues : Ti.UI.createWindow({
 			title : 'Venues',
 			rightNavButton : addButton,
-			barColor: '#000',
-			backgroundColor : 'blue',
-			titleControl : new TitleStyle('Venues')
+			barColor: '#1E0B02'
+			//titleControl : new TitleStyle('Venues')
 		})
 	};
 	// return the default windows

@@ -11,8 +11,9 @@ exports.AddDeal = function(nav, tabs, location) {
 		title : 'Add Deal',
 		backButtonTitle : 'back',
 		rightNavButton : cancelButton,
-		barColor: '#000',
-		backgroundColor : '#ddd'
+		barColor: '#1E0B02',
+		backgroundImage : 'img/bg.png',
+		backgroundRepeat : true
 	});
 	
 	var pageView = Ti.UI.createScrollView({
@@ -21,8 +22,7 @@ exports.AddDeal = function(nav, tabs, location) {
   		contentHeight: 'auto',
   		showVerticalScrollIndicator: true,
   		height : '100%',
-  		width : '100%',	
-		backgroundColor : '#ccc'
+  		width : '100%'
 	})
 	
 	
@@ -36,8 +36,7 @@ exports.AddDeal = function(nav, tabs, location) {
 	var dealForm = dealForm.createForm({
 		style : dealForm.STYLE_LABEL,
 		fields : dealFields,
-		width : 'auto',
-		backgroundColor : 'blue'
+		width : 'auto'
 	});
 	
 	dealForm.addEventListener('createDeal', function(e) {

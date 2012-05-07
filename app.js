@@ -1,8 +1,11 @@
 // Swillr Mobile App
 
 
-// orange text color: #f4744d
-// grey text color : #686868
+// deep brown: #1E0B02
+// medium brown : #561F06
+// dark blue: #063D56
+// medium blue : #096590
+// very light color : #F4DDD2
 
 // Facebook app ID: 382696298430425
 Ti.Facebook.appid = "382696298430425";
@@ -23,7 +26,7 @@ if (Ti.Platform.osname == 'iphone' || Ti.Platform.osname == 'ipad') {
 	}
 	
 	// this sets the background color of the master UIView (when there are no windows/tab groups on it)
-	Ti.UI.setBackgroundColor('orange');
+	Ti.UI.setBackgroundColor('#090300');
 	
 	// define the main windows for the applications and their navGroup pages
 	var Windows = require('ui/windows').Windows;
@@ -42,6 +45,7 @@ if (Ti.Platform.osname == 'iphone' || Ti.Platform.osname == 'ipad') {
 	// and then will add new pages to the navigational group as required
 	// wrapping this in a function I can call when login happens 
 	var DefaultViews = require('ui/addDefaultViews').DefaultViews;
+	new DefaultViews(windows, nav, tabs);
 	
 	// make the login page and then open it
 	var LoginPage = require('views/login/login').LoginPage;
@@ -51,7 +55,7 @@ if (Ti.Platform.osname == 'iphone' || Ti.Platform.osname == 'ipad') {
 	if (isLoggedIn == true) {
 					
 		// create the default views
-		new DefaultViews(windows, nav, tabs);
+		//new DefaultViews(windows, nav, tabs);
 	} 
 	else {
 		windows.login.add(new LoginPage);
@@ -73,7 +77,7 @@ if (Ti.Platform.osname == 'iphone' || Ti.Platform.osname == 'ipad') {
 			var Geo = require('libs/geolocation').Geo;
 			var geo = Geo(tabs, windows);
 			// create the default views
-			new DefaultViews(windows, nav, tabs);
+			//new DefaultViews(windows, nav, tabs);
 	       
 	    } else if (e.error) {
 	        alert("there was an error logging in: " + e.error);
@@ -89,7 +93,7 @@ if (Ti.Platform.osname == 'iphone' || Ti.Platform.osname == 'ipad') {
 		Ti.API.log('logging in');
 		
 		windows.login.close();
-		new DefaultViews(windows, nav, tabs);
+		//new DefaultViews(windows, nav, tabs);
 		tabs.tabGroup.open();
 	});
 	

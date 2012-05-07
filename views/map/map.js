@@ -2,7 +2,7 @@
 exports.Map = function(nav, tabs, geo, data) {
 	
 	//Ti.API.log(geo);
-	//Ti.API.log(data.venues);
+	Ti.API.log(data.venues);
 	geo.latitude = -33.88583526611328;
 	geo.longitude = 151.214178466797;
 	
@@ -19,12 +19,35 @@ exports.Map = function(nav, tabs, geo, data) {
 	});
 	
 	constructPin = function(venue) {
+		// get the image type
+		var eventLength = venue.events.length - 1;
+		//Ti.API.log(venue.events[eventLength]);
+		var imageType;
+		switch (venue.events[eventLength].pin)
+		{
+			case 'emptyBeer':
+				imageType = 'img/pin/beer-empty.png';
+				break;
+			case 'dregsBeer':
+				imageType = 'img/pin/beer-dregs.png';
+				break;
+			case 'halfBeer':
+				imageType = 'img/pin/beer-half.png';
+				break;
+			case 'fullBeer':
+				imageType = 'img/pin/beer-full.png';
+				break;
+			default :
+				imageType = 'img/pin/beer-full.png';	
+		}
+		
 		var pin = Titanium.Map.createAnnotation({
 			latitude : venue.latitude,
 			longitude : venue.longitude,
 			title : venue.title,
 			subtitle : venue.address,
 			pincolor : Titanium.Map.ANNOTATION_BLUE,
+			image : imageType,
 			animate : false,
 			rightButton : Titanium.UI.iPhone.SystemButton.DISCLOSURE,
 			myid : venue.id // CUSTOM ATTRIBUTE THAT IS PASSED INTO EVENT OBJECTS
