@@ -1,7 +1,7 @@
 // mopdule that generates the friends list
 exports.AddEvent = function(nav, tabs, location) {
 	
-	//Ti.API.log(location);
+	Ti.API.log(location);
 	var cancelButton = Titanium.UI.createButton({
 		title : 'Cancel',
 		style : Titanium.UI.iPhone.SystemButtonStyle.BORDERED
@@ -41,8 +41,38 @@ exports.AddEvent = function(nav, tabs, location) {
 	});
 	
 	eventForm.addEventListener('createEvent', function(e) {
-		Ti.API.log(e);
-		alert('saving event');
+		Ti.API.log(location);
+		
+		// save the new location data
+		// each filed needs a value
+		if (!e.values.day || !e.values.end || !e.values.start) {
+			alert('All fields must be filled out to save this event');
+		}
+		else {
+			//alert('Saving event');
+			var newEvent = {
+				day : e.values.day,
+				start : e.values.start,
+				end : e.values.end
+			}
+			// check whether the location exists, if not then create a new event
+			if (location) {
+				if (location.events) {
+					location.events.push(newEvent);
+				}
+				else {
+					location.events = [newEvent];
+				}
+			}
+			else {
+				location = {
+					events : [
+						newEvent
+					]
+				}
+			}
+			Ti.App.fireEvent('app:redraw.venue', location);
+		}
 	});
 	
 	pageView.add(eventForm);

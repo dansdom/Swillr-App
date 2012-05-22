@@ -1,7 +1,7 @@
 // login page
 exports.Place = function(nav, tabs, location) {
 	
-	Ti.API.log(location);
+	//Ti.API.log(location);
 	
 	var page = Ti.UI.createWindow({
 		title : 'The Deal',
@@ -24,7 +24,7 @@ exports.Place = function(nav, tabs, location) {
 		view : Ti.UI.createView({
 			layout : 'vertical',
 			width : '100%',
-			height : 'auto',
+			height : Ti.UI.SIZE,
 			top : '5dp',
 			bottom : '10dp'
 		}),
@@ -61,8 +61,8 @@ exports.Place = function(nav, tabs, location) {
 			var locationEvent = {
 				view : Ti.UI.createView({
 					layout : 'vertical',
-					height : 'auto',
-					//width : 'auto',
+					height : Ti.UI.SIZE,
+					width : 'auto',
 					borderWidth : 1,
 					borderColor : '#c8c8c8',
 					backgroundColor : '#f8f8f8',
@@ -75,14 +75,14 @@ exports.Place = function(nav, tabs, location) {
 				}),
 				timeView : Ti.UI.createView({
 					layout : 'absolute',
-					height : 'auto',
+					height : Ti.UI.SIZE,
 					width : '100%',
 					left : 0,
 					right : 0,
 					top : '10dp',
 					bottom : '0dp'
 				}),
-				hoursView : Ti.UI.createView({
+				hoursView : Ti.UI.createLabel({
 					layout : 'horizontal',
 					height : 'auto',
 					width : 'auto',

@@ -72,6 +72,7 @@ var ctr = 1;
 var addField = function(field, fieldRefs) {
 	var title = field.title || ('field' + ctr++);
 	var id = field.id || title;
+	var value = field.value || '';
 	var type = field.type || exports.TYPE_TEXT;
 	var form = this;
 	var fieldObject = undefined;
@@ -81,10 +82,12 @@ var addField = function(field, fieldRefs) {
 		type === exports.TYPE_NUMBER ||
 		type === exports.TYPE_PHONE ||
 		type === exports.TYPE_PASSWORD) {
-		fieldObject = Ti.UI.createTextField(textFieldDefaults);
-		fieldObject.keyboardType = keyboardMap[type];
-		fieldObject.passwordMask = type === exports.TYPE_PASSWORD;
-		handleStyle(form, fieldObject, title);
+			fieldObject = Ti.UI.createTextField(textFieldDefaults);
+			fieldObject.keyboardType = keyboardMap[type];
+			fieldObject.passwordMask = type === exports.TYPE_PASSWORD;
+			// set the value if it is set
+			fieldObject.setValue(value);
+			handleStyle(form, fieldObject, title);
 	} else if (type === exports.TYPE_DATE) {
 		if (isAndroid) {
 			fieldObject = Ti.UI.createPicker({
@@ -93,6 +96,8 @@ var addField = function(field, fieldRefs) {
 			handleStyle(form, undefined, title);
 		} else {
 			fieldObject = Ti.UI.createTextField(textFieldDefaults);
+			// set the value if it is set
+			fieldObject.setValue(value);
 			handleStyle(form, fieldObject, title);
 			setupPickerTextField(fieldObject, Ti.UI.PICKER_TYPE_DATE);
 		}
@@ -104,6 +109,8 @@ var addField = function(field, fieldRefs) {
 			handleStyle(form, undefined, title);
 		} else {
 			fieldObject = Ti.UI.createTextField(textFieldDefaults);
+			// set the value if it is set
+			fieldObject.setValue(value);
 			handleStyle(form, fieldObject, title);
 			setupPickerTextField(fieldObject, Ti.UI.PICKER_TYPE_TIME);
 		}
@@ -119,6 +126,8 @@ var addField = function(field, fieldRefs) {
 			}
 		} else {
 			fieldObject = Ti.UI.createTextField(textFieldDefaults);
+			// set the value if it is set
+			fieldObject.setValue(value);
 			handleStyle(form, fieldObject, title);
 			setupPickerTextField(fieldObject, Ti.UI.PICKER_TYPE_PLAIN, field.data);
 		}
@@ -167,6 +176,7 @@ exports.createForm = function(o) {
 	var form = Ti.UI.createScrollView({
 		contentHeight : 'auto',
 		contentWidth : 'auto',
+		top : '20dp',
 		showVerticalScrollIndicator : true,
 		// new stuff
 		container : container,

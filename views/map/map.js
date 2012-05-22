@@ -2,9 +2,10 @@
 exports.Map = function(nav, tabs, geo, data) {
 	
 	//Ti.API.log(geo);
-	Ti.API.log(data.venues);
-	geo.latitude = -33.88583526611328;
-	geo.longitude = 151.214178466797;
+	//Ti.API.log(data.venues);
+	//geo.latitude = -33.88583526611328;
+	//geo.longitude = 151.214178466797;
+	
 	
 	mapView = Titanium.Map.createView({
 		top : 0,
@@ -70,19 +71,49 @@ exports.Map = function(nav, tabs, geo, data) {
 		return pin;
 	};
 	
+	addPins = function(data) {
+				
+		var venues = data.venues;
+		var venueLength = data.venues.length;
+		var pins = [];
+		// construct the pins and them add them to the map
+		for (var i = 0; i < venueLength; i++)
+		{
+			var pin = constructPin(venues[i]);
+			pins.push(pin);
+		}
+		
+		// add the pins to the map
+		mapView.addAnnotations(pins);
+	};
 	
-	var venues = data.venues;
-	var venueLength = data.venues.length;
-	var pins = [];
-	// construct the pins and them add them to the map
-	for (var i = 0; i < venueLength; i++)
-	{
-		var pin = constructPin(venues[i]);
-		pins.push(pin);
-	}
+	addPins(data);
 	
-	// add the pins to the map
-	mapView.addAnnotations(pins);
+	var Geo = require('libs/geolocation').Geo;
+	var updateUserPosition = function(position) {
+		if (position) {
+			mapView.setLocation({latitude: position.latitude, longitude:position.longitude});
+		}
+	};
+	
+	Ti.App.addEventListener('app:center.map', function(){
+		updateUserPosition(geo);
+	});
+	
+	Ti.App.addEventListener('app:update.map', function(){
+		// this function rebuilds the map
+		Ti.API.log('making map');
+		// remove all the pins on the map
+		mapView.removeAllAnnotations();
+		// get the new pins
+		var Request = require('libs/httpRequest').HttpRequest;
+		var venuesToday = 'http://swillr.com/venues/lookup/day.json';
+		var dataToday = new Request('GET', venuesToday, null, addPins);
+	});
+	
+	Ti.Geolocation.addEventListener('location', function(){
+    	var geo = Geo();
+	});
 		
 	// return the view of the page
 	return mapView;

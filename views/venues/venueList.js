@@ -1,5 +1,5 @@
 // mopdule that generates the friends list
-exports.VenueList = function(nav, tabs, data) {
+exports.VenueList = function(nav, tabs, windows, data) {
 
 	// this is the search index that sits on the side of the page
 	// index values are added for the first item of each letter which has the 'header' attribute
@@ -70,7 +70,6 @@ exports.VenueList = function(nav, tabs, data) {
 			sectionData[sectionNumber].headerView.add(headerLabel);
 			sectionData[sectionNumber].headerView.add(bottomLine);
 			
-			indexCounter += 1;
 			addValueToIndex(header, indexCounter);
 			// assign this index to the searchIndex item
 			venueHeader = header;
@@ -132,6 +131,8 @@ exports.VenueList = function(nav, tabs, data) {
 		venueView.createView();
 		venue.add(venueView.view);
 		sectionData[sectionNumber].add(venue);
+		// add to the index
+		indexCounter += 1;
 	};
 	
 	// add search bar at the top of the page
@@ -163,7 +164,7 @@ exports.VenueList = function(nav, tabs, data) {
 		//Ti.API.log(e.row.friendData);
 		// check whether it is a giftItem by checking the classname of the row
 		if (e.row.className == 'venue') {
-			
+			Ti.API.log(e.row.venueData);
 			// get the gifts data using the users facebook uid
 			// this is the function that builds the page and then sorts out my stack
 			var VenueInfo = require('views/venues/venueInfo').VenueInfo;
@@ -174,6 +175,26 @@ exports.VenueList = function(nav, tabs, data) {
 		}
 		// friendTitle = e.row.friendData.title;
 	});
+	
+	Ti.App.addEventListener('app:new.venue', function() {
+		var VenueInfo = require('views/venues/venueInfo').VenueInfo;
+		var venueInfo = new VenueInfo(nav, tabs, null);
+		nav.venuesWindowStack.push(venueInfo);
+		nav.venues.open(venueInfo);
+	});
+	
+	// This function redraws the venue information page once the data has been changed
+	Ti.App.addEventListener('app:redraw.venue', function(e) {
+		//Ti.API.log('rebuilding the venue information page');
+		// build the venue page again
+		var VenueInfo = require('views/venues/venueInfo').VenueInfo;
+		var venueInfo = new VenueInfo(nav, tabs, e);
+		nav.venuesWindowStack.push(venueInfo);
+		//venueInfo.open();
+		nav.venues.open(venueInfo);
+		
+	});
+	
 	// return the table view
 	return tableView;
 };

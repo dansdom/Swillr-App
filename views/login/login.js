@@ -5,8 +5,6 @@ exports.LoginPage = function() {
 		logo : Ti.UI.createImageView({
 			image : 'img/three-beers-large.png',
 			top : '10dp',
-			left : '0dp',
-			right : '0dp',
 			height : 240,
 			width : 249
 		}),
@@ -57,7 +55,7 @@ exports.LoginPage = function() {
 	
 	loginPage.button.addEventListener('click', function() {
 		// close the login window and the open the tabGroup
-		Ti.App.fireEvent('app:login')
+		Ti.App.fireEvent('app:login');
 	});
 	
 	// return the view of the page

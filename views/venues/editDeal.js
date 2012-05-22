@@ -1,5 +1,5 @@
 // mopdule that generates the friends list
-exports.AddDeal = function(nav, tabs, location, index) {
+exports.EditDeal = function(nav, tabs, deal, location, eventIndex, dealIndex) {
 	
 	//Ti.API.log(index);
 	var cancelButton = Titanium.UI.createButton({
@@ -8,7 +8,7 @@ exports.AddDeal = function(nav, tabs, location, index) {
 	});
 	
 	var page = Ti.UI.createWindow({
-		title : 'Add Deal',
+		title : 'Edit Deal',
 		backButtonTitle : 'back',
 		rightNavButton : cancelButton,
 		barColor: '#1E0B02',
@@ -25,11 +25,12 @@ exports.AddDeal = function(nav, tabs, location, index) {
   		width : '100%'
 	})
 	
+	
 	// add the form to the page
 	var dealForm = require('libs/forms');
 	var dealFields = [
-		{title : 'Deal Description:', type : 'text', id : 'title'},
-		{title : 'Save Deal', type : 'submit', id : 'createDeal'}		
+		{title : 'Deal Description:', type : 'text', id : 'title', value : deal},
+		{title : 'Save Deal', type : 'submit', id : 'editDeal'}		
 	];
 	
 	var dealForm = dealForm.createForm({
@@ -38,24 +39,26 @@ exports.AddDeal = function(nav, tabs, location, index) {
 		width : 'auto'
 	});
 	
-	dealForm.addEventListener('createDeal', function(e) {
-		//Ti.API.log(location.events[index].deals);
+	dealForm.addEventListener('editDeal', function(e) {
+		
+		Ti.API.log(location.events[eventIndex].deals);
 		//alert('saving deal');
 		if (e.values.title) {
-			//Ti.API.log(index);
-			if (location.events[index].deals) {
-				//Ti.API.log('deals is an array');
-				location.events[index].deals.push(e.values.title);
+			if (location.events[eventIndex].deals) {
+			//Ti.API.log(eventIndex);
+				location.events[eventIndex].deals[dealIndex] = e.values.title;
 			}
 			else {
-				//Ti.API.log('deals is not an array');
-				location.events[index].deals = [e.values.title];
+				location.events[eventIndex].deals = [e.values.title];
 			}
-			Ti.App.fireEvent('app:redraw.venue', location);
 		}
+		Ti.API.log(location);
+		Ti.App.fireEvent('app:redraw.venue', location);
+		
 	});
 	
 	pageView.add(dealForm);
+	
 	
 	// button event listeners
 	cancelButton.addEventListener('click', function() {

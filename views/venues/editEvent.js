@@ -1,7 +1,7 @@
-// mopdule that generates the friends list
-exports.EditEvent = function(nav, tabs, event) {
+// edit event module
+exports.EditEvent = function(nav, tabs, eventInfo, location, eventIndex) {
 	
-	//Ti.API.log(location);
+	Ti.API.log(location);
 	var cancelButton = Titanium.UI.createButton({
 		title : 'Cancel',
 		style : Titanium.UI.iPhone.SystemButtonStyle.BORDERED
@@ -28,9 +28,9 @@ exports.EditEvent = function(nav, tabs, event) {
 	// add the form to the page
 	var eventForm = require('libs/forms');
 	var eventFields = [
-		{title : 'Day:', type : 'picker', id : 'day', data : ['Monay', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']},
-		{title : 'Start:', type : 'time', id : 'start'},
-		{title : 'End:', type : 'time', id : 'end'},
+		{title : 'Day:', type : 'picker', id : 'day', value : eventInfo.day, data : ['Monay', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']},
+		{title : 'Start:', type : 'time', id : 'start', value : eventInfo.start},
+		{title : 'End:', type : 'time', id : 'end', value : eventInfo.end},
 		{title : 'Create Event', type : 'submit', id : 'saveEvent'}
 	];
 	
@@ -41,8 +41,13 @@ exports.EditEvent = function(nav, tabs, event) {
 	});
 	
 	eventForm.addEventListener('saveEvent', function(e) {
-		Ti.API.log(e);
+		//Ti.API.log(e);
 		//alert('saving event');
+		
+		location.events[eventIndex].day = e.values.day;
+		location.events[eventIndex].start = e.values.start;
+		location.events[eventIndex].end = e.values.end;
+		Ti.App.fireEvent('app:redraw.venue', location);
 	});
 	
 	pageView.add(eventForm);

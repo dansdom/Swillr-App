@@ -2,7 +2,7 @@
 // http://screencasts.org/topics.json
 exports.HttpRequest = function(type, url, data, callback, args) {
 	
-	//Ti.API.log(type + ', ' + url + ', ' + callback + ', ' + args);
+	Ti.API.log(type + ', ' + url + ', ' + callback + ', ' + args);
 	
 	var client = Ti.Network.createHTTPClient({
 		// function called when the response data is available
@@ -17,12 +17,15 @@ exports.HttpRequest = function(type, url, data, callback, args) {
 		onerror : function(e) {
 			//Ti.API.debug(e.error);
 			alert('there was an error getting the data from the server. url: ' + url);
+			// just sending back a false value, then I can do stuff back on the page view if I need to.
+			callback(false);
 		},
 		timeout : 60000  /* in milliseconds */
 	});
 	
-	Ti.API.log('is there any data?');
-	
+	//Ti.API.log('is there any data?');
+	// This sends the user agent data back to the server
+	client.setRequestHeader('User-Agent', Ti.userAgent);
 	// Prepare the connection.
 	client.open(type, url);
 	

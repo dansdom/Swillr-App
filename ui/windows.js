@@ -3,12 +3,34 @@
 exports.Windows = function() {
 	
 	// info button with popup box
-	var InfoButton = require('ui/infoButton').InfoButton;
-	var infoButton = new InfoButton();
+	//var InfoButton = require('ui/infoButton').InfoButton;
+	//var infoButton = new InfoButton();
 	
 	var addButton = Titanium.UI.createButton({
-		title : 'Add',
+		title : 'Add Venue',
 		style : Titanium.UI.iPhone.SystemButtonStyle.BORDERED
+	});
+	addButton.addEventListener('click', function() {
+		Ti.App.fireEvent('app:new.venue');
+	});
+	
+	var locateBtn = Titanium.UI.createButton({
+		title : '',
+		height : '55dp',
+		image : 'img/light/light_locate.png',
+		style : Titanium.UI.iPhone.SystemButtonStyle.BORDERED
+	});
+	locateBtn.addEventListener('click', function() {
+		Ti.App.fireEvent('app:center.map');
+	});
+	
+	var updateMapBtn = Titanium.UI.createButton({
+		title : 'Update',
+		height : '55dp',
+		style : Titanium.UI.iPhone.SystemButtonStyle.BORDERED
+	});
+	updateMapBtn.addEventListener('click', function() {
+		Ti.App.fireEvent('app:update.map');
 	});
 	
 	// include the titleControl script
@@ -34,8 +56,9 @@ exports.Windows = function() {
 		    backgroundRepeat : true
 		}),
 		map : Ti.UI.createWindow({
-			title : 'Happy Hour Map', 
-			rightNavButton : infoButton,
+			title : 'Map', 
+			rightNavButton : locateBtn,
+			leftNavButton : updateMapBtn,
 			barColor: '#1E0B02'
 			//titleControl : new TitleStyle('Happy Hour Map')
 		}),

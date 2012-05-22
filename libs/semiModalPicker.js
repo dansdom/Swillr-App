@@ -20,16 +20,16 @@ var timeToString = function(time) {
 exports.createSemiModalPicker = function(o) {
 	var type = o.type === undefined ? Ti.UI.PICKER_TYPE_PLAIN : o.type;
 	var modalWin = Ti.UI.createWindow({
-		backgroundColor:'transparent'
+		backgroundColor : 'transparent'
 	});
 	var overlay = Ti.UI.createView({
-		backgroundColor: '#000',
-		opacity: 0.6
+		backgroundColor : '#000',
+		opacity : 0.6
 	});
 	var container = Ti.UI.createView({
-		bottom: 0,
-		layout: 'vertical',
-		height: 'auto'
+		bottom : 0,
+		layout : 'vertical',
+		height : Ti.UI.SIZE
 	});
 	
 	var picker = Ti.UI.createPicker({

@@ -1,7 +1,7 @@
 //  Geolocation module
 exports.Geo = function(callback) {
 	
-	Ti.API.log('getting geolocation');
+	//Ti.API.log('getting geolocation');
 	
 	Ti.Geolocation.purpose = "GPS user coordinates";
 	Ti.Geolocation.distanceFilter = 10; // set the granularity of the location event
@@ -30,8 +30,11 @@ exports.Geo = function(callback) {
 			//openApp(position);
 		}
 		//Ti.API.log(position);
-		callback(position);
+		if (typeof callback == 'function') {
+			callback(position);
+		}
 		
 	});
+	return coords;
 	
 };

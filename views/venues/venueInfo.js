@@ -1,14 +1,16 @@
 // mopdule that generates the friends list
 exports.VenueInfo = function(nav, tabs, location) {
 	
-	//Ti.API.log(location);
+	// remove all windows in the nav group
+	
+	
+	Ti.API.log('building out the location');
 	var editButton = Titanium.UI.createButton({
 		title : 'Edit Venue',
 		style : Titanium.UI.iPhone.SystemButtonStyle.BORDERED
 	});
 	
 	editButton.addEventListener('click', function() {
-
 		// go to the edit page
 		var VenueEdit = require('views/venues/venueEdit').VenueEdit;
 		var venueEdit = new VenueEdit(nav, tabs, location);
@@ -16,254 +18,335 @@ exports.VenueInfo = function(nav, tabs, location) {
 		nav.venues.open(venueEdit);
 	});
 	
+	var backButton = Ti.UI.createButton({
+		title : 'Venues',
+		style : Titanium.UI.iPhone.SystemButtonStyle.BORDERED
+	});
+	
+	backButton.addEventListener('click', function() {
+		// this is where the stack gets it ^^
+		Ti.API.log('clicked the back button');
+		//return false;
+		var VenueList = require('ui/killStack').venueStack;
+		var venueList = new VenueList(nav);
+	});
+	
 	var page = Ti.UI.createWindow({
 		title : 'Venue Info',
-		backButtonTitle : 'back',
+		leftNavButton : backButton,
 		rightNavButton : editButton,
 		barColor: '#1E0B02',
 		backgroundImage : 'img/bg2.png',
 		backgroundRepeat : true
 	});
 	
-	var pageView = Ti.UI.createScrollView({
+	var tableView = Ti.UI.createTableView({
+		data : [],
+		style: Ti.UI.iPhone.TableViewStyle.GROUPED,
+		backgroundColor : 'transparent',
+		separatorColor : '#ccc',
+		left : '5dp',
+		right : '5dp',
+		top : '0dp',
+		bottom : '0dp'
+	});
+	
+	var tableData = [];
+	
+	var locationHeader = Ti.UI.createTableViewSection({
+		height : '40dp'
+	});
+	
+	locationHeader.headerView = Ti.UI.createView({
 		layout : 'vertical',
-		contentWidth: 'auto',
-  		contentHeight: 'auto',
-  		showVerticalScrollIndicator: true,
-  		height : '100%',
-  		width : '100%'
-	})
+		width : '100%',
+		height : 'auto',
+		top : '0dp',
+		bottom : '0dp'
+	});
 	
-	var place = {
-		view : Ti.UI.createView({
-			layout : 'vertical',
-			width : '100%',
-			height : 'auto',
-			top : '5dp',
-			bottom : '10dp'
-		}),
-		title : Ti.UI.createLabel({
-			text : location.title,
-			height : 'auto',
-			width : 'auto',
-			font : {fontFamily : 'News Cycle', fontSize : 22}
-		}),
-		address : Ti.UI.createLabel({
-			text : location.address,
-			height : 'auto',
-			width : 'auto',
-			top : '-8dp',
-			font : {fontFamily : 'News Cycle', fontSize : 14}
-		}),
-		createView : function() {
-			this.view.add(this.title);
-			this.view.add(this.address);
-		}
-	};
-	place.createView();
-	// add the view to the page
-	pageView.add(place.view);
+	if (location) {
+		var locationTitle = {
+			title : Ti.UI.createLabel({
+				text : location.title,
+				height : 'auto',
+				width : 'auto',
+				top : 0,
+				bottom: 0,
+				font : {fontFamily : 'News Cycle', fontSize : 22},
+				shadowColor : '#fff',
+				shadowOffset : {x:0,y:1}
+			}),
+			address : Ti.UI.createLabel({
+				text : location.address + ', ' + location.suburb,
+				height : 'auto',
+				width : 'auto',
+				top : '-8dp',
+				font : {fontFamily : 'News Cycle', fontSize : 14}
+			}),
+			createView : function() {
+				locationHeader.headerView.add(this.title);
+				locationHeader.headerView.add(this.address);
+			}
+		};
+		locationTitle.createView();
+		// add the view to the page
+		tableData.push(locationHeader);
 	
-	// add each of the evnts for the place
-	if (location.events)
-	{
-		for (var i = 0; i < location.events.length; i++)
+	
+		// add each of the evnts for the place
+		if (location.events)
 		{
-			
-			var eventInfo = location.events[i];
-			var editBtn = Ti.UI.createButton({
-				title : 'EDIT EVENT',
-					width : '80dp',
-					height : '20dp',
-					top : '0dp',
-					bottom : '3dp',
-					right : '15dp',
-					style : Titanium.UI.iPhone.SystemButtonStyle.PLAIN,
-					backgroundGradient: {
-						type:'linear', 
-						colors:[
-							{color : '#C8B9B2', offset : 0},
-							{color : '#7A5542', offset : 0.4},
-							{color : '#7A5542', offset : 0.6}
-					]},
+			for (var i = 0; i < location.events.length; i++)
+			{
+				var eventInfo = location.events[i];
+				//Ti.API.log(eventInfo);
+				// create the table view
+				var eventSection = Ti.UI.createTableViewSection({
+					borderRadius : '20dp',
+					top : 0,
+					bottom : 0,
 					borderWidth : 1,
-					borderColor : '#561F06',
-					color : '#fff',
-					borderRadius : '7dp',
-					font : {fontSize : 10, fontWeight : 'bold'}
-			});
-			editBtn.addEventListener('click', function() {
-				var EditEvent = require('views/venues/editEvent').EditEvent;
-				var editEvent = new EditEvent(eventInfo);
-				nav.venuesWindowStack.push(editEvent);
-				nav.venues.open(editEvent);
-			});
-			pageView.add(editBtn);
-			//Ti.API.log(eventInfo);
-			var locationEvent = {
-				view : Ti.UI.createView({
-					layout : 'vertical',
-					height : 'auto',
-					//width : 'auto',
-					backgroundColor : '#f8f8f8',
-					top : '0dp',
-					bottom : '10dp',
-					left : '10dp',
-					right : '10dp',
-					borderRadius : '10dp',
-					borderWidth : 1,
-					borderColor : '#c8c8c8',
-				}),
-				timeView : Ti.UI.createView({
-					layout : 'absolute',
-					height : 'auto',
-					width : '100%',
-					left : 0,
-					right : 0,
-					top : '10dp',
-					bottom : '0dp'
-				}),
-				hoursView : Ti.UI.createView({
-					layout : 'horizontal',
-					height : 'auto',
-					width : 'auto',
-					right : '10dp'					
-				}),
-				day : Ti.UI.createLabel({
-					text : eventInfo.day + ' : ',
-					height : 'auto',
-					width : 'auto',
-					left : '10dp',
-					font : {fontWeight : 'bold', fontSize : 16}
-				}),
-				start : Ti.UI.createLabel({
-					text : eventInfo.start,
-					height : 'auto',
-					width : 'auto',
-					font : {fontFamily : 'News Cycle', fontSize : 15}
-				}),
-				end : Ti.UI.createLabel({
-					text : eventInfo.end,
-					height : 'auto',
-					width : 'auto',
-					font : {fontFamily : 'News Cycle', fontSize : 15}
-				}),
-				dash : Ti.UI.createLabel({
-					text : ' - ',
-					height : 'auto',
-					width : 'auto',
-					font : {fontFamily : 'News Cycle', fontSize : 15}
-				}),
-				addDealBtn : Ti.UI.createButton({
-					title : 'ADD DEAL',
-					width : '80dp',
-					height : '20dp',
-					top : '5dp',
-					bottom : '10dp',
-					left : '10dp',
-					style : Titanium.UI.iPhone.SystemButtonStyle.PLAIN,
-					backgroundGradient: {
-						type:'linear', 
-						colors:[
-							{color : '#C8B9B2', offset : 0},
-							{color : '#7A5542', offset : 0.4},
-							{color : '#7A5542', offset : 0.6}
-					]},
-					borderWidth : 1,
-					borderColor : '#561F06',
-					color : '#fff',
-					borderRadius : '7dp',
-					font : {fontSize : 10, fontWeight : 'bold'}
-				}),
-				createView : function() {
-					this.timeView.add(this.day);
-					this.hoursView.add(this.start);
-					this.hoursView.add(this.dash);
-					this.hoursView.add(this.end);
-					this.timeView.add(this.hoursView);
-					this.view.add(this.timeView);
+					borderColor : '#ccc',
+					sectionIndex : i
+				});
+				
+				// add the event header row
+				var eventHeader = Ti.UI.createTableViewRow({
+					//hasChild : true,
+					className : 'event',
+					eventData : eventInfo,
+					height : 38,
+					title : '',
+					color : '#000',
+					backgroundColor : '#fff',
+					selectedBackgroundColor : '#C8B9B2'
+				});
+				var eventHeaderView = {
+					view : Ti.UI.createView({
+						layout : 'absolute',
+						height : 38
+					}),
+					day : Ti.UI.createLabel({
+						text : eventInfo.day + ' : ',
+						height : 38,
+						left : '10dp',
+						font : {fontSize : 18}
+					}),
+					timeSlot : Ti.UI.createLabel({
+						text : eventInfo.start + ' - ' + eventInfo.end,
+						height : 38,
+						right : '45dp',
+						font : {fontFamily : 'News Cycle', fontSize : 15}
+					}),
+					rightButton : Ti.UI.createButton({
+						style:Titanium.UI.iPhone.SystemButton.DISCLOSURE,
+						right : '5dp'
+					}),
+					createView : function(eventInfo, index) {
+						this.view.add(this.day);
+						this.view.add(this.timeSlot);
+						this.view.add(this.rightButton);
+						this.view.addEventListener('click', function() {
+							// need to fill these forms out
+							var EditEvent = require('views/venues/editEvent').EditEvent;
+							var editEvent = new EditEvent(nav, tabs, eventInfo, location, index);
+							nav.venuesWindowStack.push(editEvent);
+							nav.venues.open(editEvent);
+						});	
+					}
+				};
+				eventHeaderView.createView(eventInfo, i);
+				eventHeader.add(eventHeaderView.view)
+				eventSection.add(eventHeader);
+				
+				// cycle through the events and list each one of them
+				if (eventInfo.deals) {
 					for (var j = 0; j < eventInfo.deals.length; j++)
 					{
-						Ti.API.log(eventInfo.deals[j]);
-						var dealView = Ti.UI.createView({
-							layout : 'absolute',
-							height : '20dp',
-							top : '6dp',
-							bottom : '6dp',
-							width : '100%'
+						var deal = eventInfo.deals[j];
+						// event info row
+						//Ti.API.log(deal);
+						var dealInfo = Ti.UI.createTableViewRow({
+							className : 'event',
+							dealData : deal,
+							dealIndex : j,
+							height : 38,
+							title : '',
+							color : '#000',
+							backgroundColor : '#fff',
+							selectedBackgroundColor : '#C8B9B2',
+							editable : true
 						});
-						var dealInfo = Ti.UI.createLabel({
-							text : eventInfo.deals[j],
-							height : '20dp',
-							width : 'auto',
-							left : '10dp',
-							font : {fontFamily : 'News Cycle', fontSize : 16}
-						});
-						var removeBtn = Ti.UI.createButton({
-							title : 'X',
-							height : '24dp',							
-							width : '24dp',
-							top : '0dp',
-							//left : '30dp',
-							right : '10dp',
-							style:Titanium.UI.iPhone.SystemButtonStyle.PLAIN,
-							backgroundGradient: {
-								type:'linear', 
-								colors:[
-									{color : '#C8B9B2', offset : 0},
-									{color : '#7A5542', offset : 0.4},
-									{color : '#7A5542', offset : 0.6}
-							]},
-							borderWidth : 1,
-							borderColor : '#561F06',
-							color : '#fff',
-							borderRadius : '7dp',
-							font : {fontWeight : 'bold'}
-						});
-						removeBtn.addEventListener('click', function() {
-							alert('do you want to remove this event?');
-						});
-						dealView.add(dealInfo);
-						dealView.add(removeBtn);
-						this.view.add(dealView);					
+						dealView = {
+							view : Ti.UI.createLabel({
+								layout : 'absolute',
+								//height : 30,
+								left : 0,
+								height : 38
+							}),
+							desc : Ti.UI.createLabel({
+								text : deal,
+								height : 38,
+								width : '100%',
+								left : '10dp',
+								textAlign : 'left',
+								font : {fontFamily : 'News Cycle', fontSize : 16}
+							}),
+							createView : function(deal, eventIndex, dealIndex) {
+								Ti.API.log(deal);
+								Ti.API.log('I am adding a deal');
+								this.view.add(this.desc);
+								this.view.addEventListener('click', function() {
+									// need to fill these forms out
+									var EditDeal = require('views/venues/editDeal').EditDeal;
+									var editDeal = new EditDeal(nav, tabs, deal, location, eventIndex, dealIndex);
+									nav.venuesWindowStack.push(editDeal);
+									nav.venues.open(editDeal);
+								});
+							}
+						};
+						dealView.createView(deal, i, j);
+						dealInfo.add(dealView.view);
+						eventSection.add(dealInfo);
 					};
-					this.view.add(this.addDealBtn);
-					this.addDealBtn.addEventListener('click', function() {
-						// go to the add deal page
-						var AddDeal = require('views/venues/addDeal').AddDeal;
-						var addDeal = new AddDeal(nav, tabs, location);
-						nav.venuesWindowStack.push(addDeal);
-						nav.venues.open(addDeal);
-					});
 				}
+				
+				// add deal row
+				var addDeal = Ti.UI.createTableViewRow({
+					
+					className : 'event',
+					venueData : eventInfo,
+					height : 38,
+					title : '',
+					backgroundColor : '#fff',
+					selectedBackgroundColor : '#C8B9B2'
+				});
+				
+				var addDealView = {
+					view : Ti.UI.createView({
+						layout : 'absolute'
+					}),
+					addLabel : Ti.UI.createLabel({
+						text : 'Add Deal',
+						height : 38,
+						left : '10dp',
+						font : {fontFamily : 'News Cycle', fontSize : 18},
+						color : '#000'
+					}),
+					rightButton : Ti.UI.createButton({
+						style:Titanium.UI.iPhone.SystemButton.CONTACT_ADD,
+						right : '5dp'
+					}),
+					createView : function(index) {
+						this.view.add(this.addLabel);
+						this.view.add(this.rightButton);
+						this.view.addEventListener('click', function() {
+							// go to the add deal page
+							var AddDeal = require('views/venues/addDeal').AddDeal;
+							var addDeal = new AddDeal(nav, tabs, location, index);
+							nav.venuesWindowStack.push(addDeal);
+							nav.venues.open(addDeal);
+						})
+					}
+				};
+				addDealView.createView(i);
+				addDeal.add(addDealView.view);
+				eventSection.add(addDeal);
+				//tableData.push(addDeal);
+				tableData.push(eventSection);
 			};
-			locationEvent.createView();
-			pageView.add(locationEvent.view);
-			
-		};
+		}
 	}
-	// get the button code
-	var Btn = require('ui/btn').Btn;
 	
-	addBtnEvent = function() {
-		var AddEvent = require('views/venues/addEvent').AddEvent;
-		var addEvent = new AddEvent(nav, tabs, location);
-		nav.venuesWindowStack.push(addEvent);
-		nav.venues.open(addEvent);
+	var locationFooter = {
+		section : Ti.UI.createTableViewSection({
+			
+		}),
+		addBtn : Ti.UI.createTableViewRow({
+			color : '#000',
+			backgroundColor : '#fff',
+			selectedBackgroundColor : '#C8B9B2'
+		}),
+		addBtnView : Ti.UI.createView({
+			layout : 'absolute',
+			height : '38dp'
+		}),
+		addBtnLabel : Ti.UI.createLabel({
+			text : 'Add New Event'
+		}),
+		addBtnAction : Ti.UI.createButton({
+			style:Titanium.UI.iPhone.SystemButton.CONTACT_ADD,
+			right : '5dp'
+		}),
+		saveBtn : Ti.UI.createTableViewRow({
+			color : '#000',
+			backgroundColor : '#fff',
+			selectedBackgroundColor : '#C8B9B2'
+		}),
+		saveBtnView : Ti.UI.createView({
+			layout : 'absolute',
+			height : '38dp'
+		}),
+		saveBtnLabel : Ti.UI.createLabel({
+			text : 'Save event'
+		}),
+		saveBtnAction : Ti.UI.createButton({
+			style:Titanium.UI.iPhone.SystemButton.CONTACT_ADD,
+			right : '5dp'
+		}),
+		saveBtnView : Ti.UI.createView({
+			layout : 'absolute',
+			height : '38dp'
+		}),
+		createView : function() {
+			this.addBtnView.add(this.addBtnLabel);
+			this.addBtnView.add(this.addBtnAction);
+			this.addBtn.add(this.addBtnView);
+			this.saveBtnView.add(this.saveBtnLabel);
+			this.saveBtnView.add(this.saveBtnAction);
+			this.saveBtn.add(this.saveBtnView);
+			this.section.add(this.addBtn);
+			this.section.add(this.saveBtn);
+			// add event listeners for both views
+			this.addBtnView.addEventListener('click', function() {
+				var AddEvent = require('views/venues/addEvent').AddEvent;
+				var addEvent = new AddEvent(nav, tabs, location);
+				nav.venuesWindowStack.push(addEvent);
+				nav.venues.open(addEvent);
+			});
+			this.saveBtnView.addEventListener('click', function() {
+				var SaveEvent = require('libs/saveEvent').SaveEvent;
+				new SaveEvent(location);
+			});
+		}
 	};
-	var addBtn = new Btn('add new event', addBtnEvent);
-	pageView.add(addBtn.view);
+	locationFooter.createView();
+	tableData.push(locationFooter.section);
 	
-	saveBtnEvent = function() {
-		// I need to put a confirmation box in and then post some data
-		var SaveEvent = require('libs/saveEvent').SaveEvent;
-		new SaveEvent(location);
-	};
-	var saveBtn = new Btn('save venue', saveBtnEvent);
-	pageView.add(saveBtn.view);
+	// delete event handling
+	tableView.addEventListener('delete', function(e)
+	{
+		Titanium.API.info("row deleted = " + e.row.venueData +", index="+e.index+", event index="+e.section.sectionIndex+", e.source.index="+e.source.dealIndex);
+		Ti.API.log(location);
+		//do anything else you want to do, maybe you can permanently delete the row from your Database
+		// modify the eventInfo object
+		location.events[e.section.sectionIndex].deals.splice(e.source.dealIndex, 1);
+		Ti.API.log(location);
+	});
 	
+	// add the data to the table
+	tableView.setData(tableData);
 	
-	page.add(pageView);
+	// add event listener to update the location
+	Ti.App.addEventListener('app:update.location', function(e) {
+		Ti.API.log('the location has been updated');
+		Ti.API.log(e);
+		// need to call a function to redraw the location info
+	});
+	
+	Ti.API.log('about to add the table to the page')
+	page.add(tableView);
 	
 	// return the page
 	return page;
