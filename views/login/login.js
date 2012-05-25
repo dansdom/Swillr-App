@@ -29,6 +29,7 @@ exports.LoginPage = function() {
 			top : '20dp',
 			height : '39dp',
 			width : '191dp',
+			backgroundSelectedColor : '#C8B9B2',
 			font : {fontWeight : 'bold', fontSize : '16dp'}
 		}),
 		view : Ti.UI.createView({

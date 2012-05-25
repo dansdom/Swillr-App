@@ -2,7 +2,7 @@
 // http://screencasts.org/topics.json
 exports.HttpRequest = function(type, url, data, callback, args) {
 	
-	Ti.API.log(type + ', ' + url + ', ' + callback + ', ' + args);
+	//Ti.API.log(type + ', ' + url + ', ' + callback + ', ' + args);
 	
 	var client = Ti.Network.createHTTPClient({
 		// function called when the response data is available

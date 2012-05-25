@@ -185,11 +185,23 @@ exports.VenueList = function(nav, tabs, windows, data) {
 	
 	// This function redraws the venue information page once the data has been changed
 	Ti.App.addEventListener('app:redraw.venue', function(e) {
-		//Ti.API.log('rebuilding the venue information page');
+		Ti.API.log('rebuilding the venue information page');
 		// build the venue page again
+		// I think I need to kill the stack here
+		// I just have to smash the stack completely here and save the location object somehow
+		var VenueRedraw = require('ui/killStack').venueRedrawStack;
+		var venueRedraw = new VenueRedraw(nav);
+		
+		
 		var VenueInfo = require('views/venues/venueInfo').VenueInfo;
-		var venueInfo = new VenueInfo(nav, tabs, e);
-		nav.venuesWindowStack.push(venueInfo);
+		var venueInfo = new VenueInfo(nav, tabs, e.location);
+		Ti.API.log('redraw venue info');
+		Ti.API.log(e);
+		//nav.venuesWindowStack = [];
+		//nav.venuesWindowStack.push(venueInfo);
+		Ti.API.log(nav.venues);
+		Ti.API.log(venueInfo);
+		
 		//venueInfo.open();
 		nav.venues.open(venueInfo);
 		

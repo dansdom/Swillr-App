@@ -137,7 +137,8 @@ var addField = function(field, fieldRefs) {
 			height : '40dp',
 			width : '250dp',
 			top : '20dp',
-			bottom : '10dp'
+			bottom : '10dp',
+			backgroundSelectedColor : '#C8B9B2'
 		});
 		button.addEventListener('click', function(e) {
 			var values = {};

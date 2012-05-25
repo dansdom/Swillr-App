@@ -59,8 +59,11 @@ exports.VenueEdit = function(nav, tabs, location) {
 		location.title = e.values.title || location.title;
 		// I think I have to do my data handling here, and pass the processed data to the event
 		//alert('saving venue');
-		//Ti.API.log(location);
-		Ti.App.fireEvent('app:redraw.venue', location);
+		e.location = location;
+		Ti.API.log('save venue info');
+		Ti.API.log(e);
+		Ti.API.log(location);
+		Ti.App.fireEvent('app:redraw.venue', e);
 	});
 	
 	pageView.add(venueForm);

@@ -4,13 +4,36 @@
 exports.venueStack = function(nav) {
 	
 	if (nav.venuesWindowStack.length > 0) {
-		var stackLength = nav.venuesWindowStack.length -1;
-		while (stackLength >= 0) {
+		var stackIndex = nav.venuesWindowStack.length;
+		while (stackIndex > 0) {
+			stackIndex--;
+			Ti.API.log(stackIndex);
+			Ti.API.log(nav.venues);
+			Ti.API.log(nav.venuesWindowStack);
 			//nav.venues.close(nav.venuesWindowStack[i]);
-			nav.venues.close(nav.venuesWindowStack[stackLength])
-			nav.venuesWindowStack.pop(nav.venuesWindowStack[stackLength]);
-			stackLength--;
+			nav.venues.close(nav.venuesWindowStack[stackIndex]);
+			//nav.venuesWindowStack.pop();
+			
 		};
+		nav.venuesWindowStack = [];
+	}
+};
+
+exports.venueRedrawStack = function(nav) {
+	
+	if (nav.venuesWindowStack.length > 0) {
+		var stackIndex = nav.venuesWindowStack.length - 1;
+		while (stackIndex > 1) {
+			
+			Ti.API.log(stackIndex);
+			Ti.API.log(nav.venues);
+			Ti.API.log(nav.venuesWindowStack);
+			//nav.venues.close(nav.venuesWindowStack[i]);
+			nav.venues.close(nav.venuesWindowStack[stackIndex]);
+			//nav.venuesWindowStack.pop();
+			stackIndex--;
+		};
+		nav.venuesWindowStack = [];
 	}
 };
 

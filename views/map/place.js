@@ -120,6 +120,7 @@ exports.Place = function(nav, tabs, location) {
 					bottom : '10dp',
 					top : '-7dp',
 					left : '10dp',
+					right : '10dp',
 					font : {fontFamily : 'News Cycle', fontSize : 14}
 				}),
 				divider : Ti.UI.createView({

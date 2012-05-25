@@ -90,15 +90,12 @@ exports.Map = function(nav, tabs, geo, data) {
 	addPins(data);
 	
 	var Geo = require('libs/geolocation').Geo;
+	geo = Geo();
 	var updateUserPosition = function(position) {
 		if (position) {
 			mapView.setLocation({latitude: position.latitude, longitude:position.longitude});
 		}
 	};
-	
-	Ti.App.addEventListener('app:center.map', function(){
-		updateUserPosition(geo);
-	});
 	
 	Ti.App.addEventListener('app:update.map', function(){
 		// this function rebuilds the map
@@ -111,8 +108,16 @@ exports.Map = function(nav, tabs, geo, data) {
 		var dataToday = new Request('GET', venuesToday, null, addPins);
 	});
 	
+	/*
 	Ti.Geolocation.addEventListener('location', function(){
-    	var geo = Geo();
+    	//geo = Geo();
+    	Ti.API.log(Ti.Geolocation.accuracy);
+	});
+	*/
+	
+	Ti.App.addEventListener('app:center.map', function(){
+		Ti.API.log('centering map');
+		var coords = Geo(updateUserPosition);
 	});
 		
 	// return the view of the page

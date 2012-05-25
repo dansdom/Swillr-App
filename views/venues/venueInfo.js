@@ -5,6 +5,7 @@ exports.VenueInfo = function(nav, tabs, location) {
 	
 	
 	Ti.API.log('building out the location');
+	/*
 	var editButton = Titanium.UI.createButton({
 		title : 'Edit Venue',
 		style : Titanium.UI.iPhone.SystemButtonStyle.BORDERED
@@ -17,7 +18,7 @@ exports.VenueInfo = function(nav, tabs, location) {
 		nav.venuesWindowStack.push(venueEdit);
 		nav.venues.open(venueEdit);
 	});
-	
+	*/
 	var backButton = Ti.UI.createButton({
 		title : 'Venues',
 		style : Titanium.UI.iPhone.SystemButtonStyle.BORDERED
@@ -34,7 +35,7 @@ exports.VenueInfo = function(nav, tabs, location) {
 	var page = Ti.UI.createWindow({
 		title : 'Venue Info',
 		leftNavButton : backButton,
-		rightNavButton : editButton,
+		//rightNavButton : editButton,
 		barColor: '#1E0B02',
 		backgroundImage : 'img/bg2.png',
 		backgroundRepeat : true
@@ -279,6 +280,22 @@ exports.VenueInfo = function(nav, tabs, location) {
 			style:Titanium.UI.iPhone.SystemButton.CONTACT_ADD,
 			right : '5dp'
 		}),
+		editBtn : Ti.UI.createTableViewRow({
+			color : '#000',
+			backgroundColor : '#fff',
+			selectedBackgroundColor : '#C8B9B2'
+		}),
+		editBtnView : Ti.UI.createView({
+			layout : 'absolute',
+			height : '38dp'
+		}),
+		editBtnLabel : Ti.UI.createLabel({
+			text : 'Edit This Venue'
+		}),
+		editBtnAction : Ti.UI.createButton({
+			style:Titanium.UI.iPhone.SystemButton.CONTACT_ADD,
+			right : '5dp'
+		}),
 		saveBtn : Ti.UI.createTableViewRow({
 			color : '#000',
 			backgroundColor : '#fff',
@@ -303,10 +320,14 @@ exports.VenueInfo = function(nav, tabs, location) {
 			this.addBtnView.add(this.addBtnLabel);
 			this.addBtnView.add(this.addBtnAction);
 			this.addBtn.add(this.addBtnView);
+			this.editBtnView.add(this.editBtnLabel);
+			//this.editBtnView.add(this.editBtnAction);
+			this.editBtn.add(this.editBtnView);
 			this.saveBtnView.add(this.saveBtnLabel);
 			this.saveBtnView.add(this.saveBtnAction);
 			this.saveBtn.add(this.saveBtnView);
 			this.section.add(this.addBtn);
+			this.section.add(this.editBtn);
 			this.section.add(this.saveBtn);
 			// add event listeners for both views
 			this.addBtnView.addEventListener('click', function() {
@@ -315,6 +336,12 @@ exports.VenueInfo = function(nav, tabs, location) {
 				nav.venuesWindowStack.push(addEvent);
 				nav.venues.open(addEvent);
 			});
+			this.editBtnView.addEventListener('click', function() {
+				var VenueEdit = require('views/venues/venueEdit').VenueEdit;
+				var venueEdit = new VenueEdit(nav, tabs, location);
+				nav.venuesWindowStack.push(venueEdit);
+				nav.venues.open(venueEdit);
+			}),
 			this.saveBtnView.addEventListener('click', function() {
 				var SaveEvent = require('libs/saveEvent').SaveEvent;
 				new SaveEvent(location);
@@ -339,14 +366,17 @@ exports.VenueInfo = function(nav, tabs, location) {
 	tableView.setData(tableData);
 	
 	// add event listener to update the location
+	// I think this event listener is dead!!!
+	/*
 	Ti.App.addEventListener('app:update.location', function(e) {
 		Ti.API.log('the location has been updated');
 		Ti.API.log(e);
 		// need to call a function to redraw the location info
 	});
-	
-	Ti.API.log('about to add the table to the page')
+	*/
+	Ti.API.log('about to add the table to the page');
 	page.add(tableView);
+	Ti.API.log('added the table to the page');
 	
 	// return the page
 	return page;
