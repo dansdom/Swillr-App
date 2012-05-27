@@ -11,9 +11,7 @@ exports.AddDeal = function(nav, tabs, location, index) {
 		title : 'Add Deal',
 		backButtonTitle : 'back',
 		rightNavButton : cancelButton,
-		barColor: '#1E0B02',
-		backgroundImage : 'img/bg.png',
-		backgroundRepeat : true
+		barColor: '#1E0B02'
 	});
 	
 	var pageView = Ti.UI.createScrollView({
@@ -51,7 +49,8 @@ exports.AddDeal = function(nav, tabs, location, index) {
 				//Ti.API.log('deals is not an array');
 				location.events[index].deals = [e.values.title];
 			}
-			Ti.App.fireEvent('app:redraw.venue', location);
+			e.location = location;
+			Ti.App.fireEvent('app:redraw.venue', e);
 		}
 	});
 	

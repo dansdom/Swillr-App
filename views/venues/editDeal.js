@@ -11,9 +11,7 @@ exports.EditDeal = function(nav, tabs, deal, location, eventIndex, dealIndex) {
 		title : 'Edit Deal',
 		backButtonTitle : 'back',
 		rightNavButton : cancelButton,
-		barColor: '#1E0B02',
-		backgroundImage : 'img/bg.png',
-		backgroundRepeat : true
+		barColor: '#1E0B02'
 	});
 	
 	var pageView = Ti.UI.createScrollView({
@@ -52,8 +50,9 @@ exports.EditDeal = function(nav, tabs, deal, location, eventIndex, dealIndex) {
 				location.events[eventIndex].deals = [e.values.title];
 			}
 		}
-		Ti.API.log(location);
-		Ti.App.fireEvent('app:redraw.venue', location);
+		//Ti.API.log(location);
+		e.location = location;
+		Ti.App.fireEvent('app:redraw.venue', e);
 		
 	});
 	

@@ -164,7 +164,7 @@ exports.VenueList = function(nav, tabs, windows, data) {
 		//Ti.API.log(e.row.friendData);
 		// check whether it is a giftItem by checking the classname of the row
 		if (e.row.className == 'venue') {
-			Ti.API.log(e.row.venueData);
+			//Ti.API.log(e.row.venueData);
 			// get the gifts data using the users facebook uid
 			// this is the function that builds the page and then sorts out my stack
 			var VenueInfo = require('views/venues/venueInfo').VenueInfo;
@@ -181,30 +181,6 @@ exports.VenueList = function(nav, tabs, windows, data) {
 		var venueInfo = new VenueInfo(nav, tabs, null);
 		nav.venuesWindowStack.push(venueInfo);
 		nav.venues.open(venueInfo);
-	});
-	
-	// This function redraws the venue information page once the data has been changed
-	Ti.App.addEventListener('app:redraw.venue', function(e) {
-		Ti.API.log('rebuilding the venue information page');
-		// build the venue page again
-		// I think I need to kill the stack here
-		// I just have to smash the stack completely here and save the location object somehow
-		var VenueRedraw = require('ui/killStack').venueRedrawStack;
-		var venueRedraw = new VenueRedraw(nav);
-		
-		
-		var VenueInfo = require('views/venues/venueInfo').VenueInfo;
-		var venueInfo = new VenueInfo(nav, tabs, e.location);
-		Ti.API.log('redraw venue info');
-		Ti.API.log(e);
-		//nav.venuesWindowStack = [];
-		//nav.venuesWindowStack.push(venueInfo);
-		Ti.API.log(nav.venues);
-		Ti.API.log(venueInfo);
-		
-		//venueInfo.open();
-		nav.venues.open(venueInfo);
-		
 	});
 	
 	// return the table view

@@ -8,9 +8,12 @@ exports.HttpRequest = function(type, url, data, callback, args) {
 		// function called when the response data is available
 		onload : function(e) {
 			//Ti.API.log('http request success');
-			//Ti.API.info("Received text: " + this.responseText);
-			var responseData = JSON.parse(this.responseText);
+			//Ti.API.info(this.responseText.length);
+			if (this.responseText.length > 1) {
+				var responseData = JSON.parse(this.responseText);
+			} 
 			// do call back function here
+			//Ti.API.log('about to do callback');
 			callback(responseData, args);
 		},
 		// function called when an error occurs, including a timeout

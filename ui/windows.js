@@ -46,13 +46,13 @@ exports.Windows = function() {
 		navWindowMap : Ti.UI.createWindow({ 
 			navBarHidden : true, 
 		    title : 'map',
-		    backgroundImage : 'im/bg.png',
+		    backgroundImage : 'img/bg2.png',
 		    backgroundRepeat : true
 		}),
 		navWindowVenues : Ti.UI.createWindow({
 			navBarHidden : true,  
 		    title : 'venues',
-		    backgroundImage : 'im/bg.png',
+		    backgroundImage : 'img/bg2.png',
 		    backgroundRepeat : true
 		}),
 		map : Ti.UI.createWindow({

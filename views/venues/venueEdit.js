@@ -22,9 +22,7 @@ exports.VenueEdit = function(nav, tabs, location) {
 		title : 'Edit Venue',
 		backButtonTitle : 'back',
 		rightNavButton : cancelButton,
-		barColor: '#1E0B02',
-		backgroundImage : 'img/bg.png',
-		backgroundRepeat : true
+		barColor: '#1E0B02'
 	});
 	
 	var pageView = Ti.UI.createScrollView({
@@ -60,9 +58,9 @@ exports.VenueEdit = function(nav, tabs, location) {
 		// I think I have to do my data handling here, and pass the processed data to the event
 		//alert('saving venue');
 		e.location = location;
-		Ti.API.log('save venue info');
-		Ti.API.log(e);
-		Ti.API.log(location);
+		//Ti.API.log('save venue info');
+		//Ti.API.log(e);
+		//Ti.API.log(location);
 		Ti.App.fireEvent('app:redraw.venue', e);
 	});
 	

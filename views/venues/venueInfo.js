@@ -5,20 +5,8 @@ exports.VenueInfo = function(nav, tabs, location) {
 	
 	
 	Ti.API.log('building out the location');
-	/*
-	var editButton = Titanium.UI.createButton({
-		title : 'Edit Venue',
-		style : Titanium.UI.iPhone.SystemButtonStyle.BORDERED
-	});
+	//Ti.API.log(location);
 	
-	editButton.addEventListener('click', function() {
-		// go to the edit page
-		var VenueEdit = require('views/venues/venueEdit').VenueEdit;
-		var venueEdit = new VenueEdit(nav, tabs, location);
-		nav.venuesWindowStack.push(venueEdit);
-		nav.venues.open(venueEdit);
-	});
-	*/
 	var backButton = Ti.UI.createButton({
 		title : 'Venues',
 		style : Titanium.UI.iPhone.SystemButtonStyle.BORDERED
@@ -26,19 +14,16 @@ exports.VenueInfo = function(nav, tabs, location) {
 	
 	backButton.addEventListener('click', function() {
 		// this is where the stack gets it ^^
-		Ti.API.log('clicked the back button');
-		//return false;
-		var VenueList = require('ui/killStack').venueStack;
-		var venueList = new VenueList(nav);
+		Ti.App.fireEvent('app:venue.listing');
 	});
 	
 	var page = Ti.UI.createWindow({
 		title : 'Venue Info',
 		leftNavButton : backButton,
 		//rightNavButton : editButton,
-		barColor: '#1E0B02',
-		backgroundImage : 'img/bg2.png',
-		backgroundRepeat : true
+		barColor: '#1E0B02'
+		//backgroundImage : 'img/bg2.png',
+		//backgroundRepeat : true
 	});
 	
 	var tableView = Ti.UI.createTableView({
@@ -195,8 +180,8 @@ exports.VenueInfo = function(nav, tabs, location) {
 								font : {fontFamily : 'News Cycle', fontSize : 16}
 							}),
 							createView : function(deal, eventIndex, dealIndex) {
-								Ti.API.log(deal);
-								Ti.API.log('I am adding a deal');
+								//Ti.API.log(deal);
+								//Ti.API.log('I am adding a deal');
 								this.view.add(this.desc);
 								this.view.addEventListener('click', function() {
 									// need to fill these forms out
@@ -355,25 +340,16 @@ exports.VenueInfo = function(nav, tabs, location) {
 	tableView.addEventListener('delete', function(e)
 	{
 		Titanium.API.info("row deleted = " + e.row.venueData +", index="+e.index+", event index="+e.section.sectionIndex+", e.source.index="+e.source.dealIndex);
-		Ti.API.log(location);
+		//Ti.API.log(location);
 		//do anything else you want to do, maybe you can permanently delete the row from your Database
 		// modify the eventInfo object
 		location.events[e.section.sectionIndex].deals.splice(e.source.dealIndex, 1);
-		Ti.API.log(location);
+		//Ti.API.log(location);
 	});
 	
 	// add the data to the table
 	tableView.setData(tableData);
 	
-	// add event listener to update the location
-	// I think this event listener is dead!!!
-	/*
-	Ti.App.addEventListener('app:update.location', function(e) {
-		Ti.API.log('the location has been updated');
-		Ti.API.log(e);
-		// need to call a function to redraw the location info
-	});
-	*/
 	Ti.API.log('about to add the table to the page');
 	page.add(tableView);
 	Ti.API.log('added the table to the page');

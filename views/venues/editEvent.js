@@ -11,9 +11,7 @@ exports.EditEvent = function(nav, tabs, eventInfo, location, eventIndex) {
 		title : 'Edit Event',
 		backButtonTitle : 'back',
 		rightNavButton : cancelButton,
-		barColor: '#1E0B02',
-		backgroundImage : 'img/bg.png',
-		backgroundRepeat : true
+		barColor: '#1E0B02'
 	});
 	
 	var pageView = Ti.UI.createScrollView({
@@ -31,7 +29,7 @@ exports.EditEvent = function(nav, tabs, eventInfo, location, eventIndex) {
 		{title : 'Day:', type : 'picker', id : 'day', value : eventInfo.day, data : ['Monay', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']},
 		{title : 'Start:', type : 'time', id : 'start', value : eventInfo.start},
 		{title : 'End:', type : 'time', id : 'end', value : eventInfo.end},
-		{title : 'Create Event', type : 'submit', id : 'saveEvent'}
+		{title : 'Edit Event', type : 'submit', id : 'saveEvent'}
 	];
 	
 	var eventForm = eventForm.createForm({
@@ -47,7 +45,8 @@ exports.EditEvent = function(nav, tabs, eventInfo, location, eventIndex) {
 		location.events[eventIndex].day = e.values.day;
 		location.events[eventIndex].start = e.values.start;
 		location.events[eventIndex].end = e.values.end;
-		Ti.App.fireEvent('app:redraw.venue', location);
+		e.location = location;
+		Ti.App.fireEvent('app:redraw.venue', e);
 	});
 	
 	pageView.add(eventForm);

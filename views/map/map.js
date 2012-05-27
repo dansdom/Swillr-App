@@ -87,7 +87,9 @@ exports.Map = function(nav, tabs, geo, data) {
 		mapView.addAnnotations(pins);
 	};
 	
-	addPins(data);
+	if (data.venues) {
+		addPins(data);
+	}
 	
 	var Geo = require('libs/geolocation').Geo;
 	geo = Geo();

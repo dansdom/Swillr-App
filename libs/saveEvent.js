@@ -4,6 +4,8 @@ exports.SaveEvent = function(location) {
 	var Request = require('libs/httpRequest').HttpRequest;
 	var url = 'http://swillr.com/update_venue_data';
 	
+	
+	
 	var confirmBtn = Ti.UI.createAlertDialog({
 		cancel: 1,
 		buttonNames: ['Save', 'Cancel'],
@@ -12,13 +14,15 @@ exports.SaveEvent = function(location) {
 	});
 	confirmBtn.show();
 	confirmBtn.addEventListener('click', function(e) {
-		//Ti.API.log(e);
+		Ti.API.log(e);
 		if (e.index == 0) {
-			function sendResponse(data) {
+			Ti.API.log('about to save');
+			//need to encode the data first
+			function sendResponse() {
+				Ti.API.log('doing save callback');
 				// create an alert saying that the data has been sent for moderation
 				alert('The venue data has been successfully sent to the team for moderation.');
 			};
-			//need to encode the data first
 			var sendData = new Request('POST', url, location, sendResponse);
 		}
 	});

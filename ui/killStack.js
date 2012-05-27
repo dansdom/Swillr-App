@@ -4,36 +4,30 @@
 exports.venueStack = function(nav) {
 	
 	if (nav.venuesWindowStack.length > 0) {
-		var stackIndex = nav.venuesWindowStack.length;
-		while (stackIndex > 0) {
-			stackIndex--;
-			Ti.API.log(stackIndex);
-			Ti.API.log(nav.venues);
-			Ti.API.log(nav.venuesWindowStack);
-			//nav.venues.close(nav.venuesWindowStack[i]);
-			nav.venues.close(nav.venuesWindowStack[stackIndex]);
-			//nav.venuesWindowStack.pop();
-			
-		};
+		//Ti.API.log('this is the stack');
+		//Ti.API.log(nav.venuesWindowStack);
+		for (var i = 0; i < nav.venuesWindowStack.length; i++) {
+			nav.venues.close(nav.venuesWindowStack[i]);
+			Ti.API.log(i);
+		}
+		// empty the stack object
 		nav.venuesWindowStack = [];
+		Ti.API.log('removed stack');
 	}
 };
 
 exports.venueRedrawStack = function(nav) {
 	
 	if (nav.venuesWindowStack.length > 0) {
-		var stackIndex = nav.venuesWindowStack.length - 1;
-		while (stackIndex > 1) {
-			
-			Ti.API.log(stackIndex);
-			Ti.API.log(nav.venues);
-			Ti.API.log(nav.venuesWindowStack);
-			//nav.venues.close(nav.venuesWindowStack[i]);
-			nav.venues.close(nav.venuesWindowStack[stackIndex]);
-			//nav.venuesWindowStack.pop();
-			stackIndex--;
-		};
-		nav.venuesWindowStack = [];
+		//Ti.API.log('this is the stack');
+		//Ti.API.log(nav.venuesWindowStack);
+		for (var i = 1; i < nav.venuesWindowStack.length; i++) {
+			nav.venues.close(nav.venuesWindowStack[i]);
+			Ti.API.log(i);
+		}
+		// empty the stack object
+		nav.venuesWindowStack = [nav.venuesWindowStack[0]];
+		Ti.API.log('removed stack');
 	}
 };
 

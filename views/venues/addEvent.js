@@ -11,9 +11,7 @@ exports.AddEvent = function(nav, tabs, location) {
 		title : 'Add Event',
 		backButtonTitle : 'back',
 		rightNavButton : cancelButton,
-		barColor: '#1E0B02',
-		backgroundImage : 'img/bg.png',
-		backgroundRepeat : true
+		barColor: '#1E0B02'
 	});
 	
 	var pageView = Ti.UI.createScrollView({
@@ -41,7 +39,7 @@ exports.AddEvent = function(nav, tabs, location) {
 	});
 	
 	eventForm.addEventListener('createEvent', function(e) {
-		Ti.API.log(location);
+		//Ti.API.log(location);
 		
 		// save the new location data
 		// each filed needs a value
@@ -71,7 +69,8 @@ exports.AddEvent = function(nav, tabs, location) {
 					]
 				}
 			}
-			Ti.App.fireEvent('app:redraw.venue', location);
+			e.location = location;
+			Ti.App.fireEvent('app:redraw.venue', e);
 		}
 	});
 	

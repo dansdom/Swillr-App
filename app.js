@@ -102,5 +102,35 @@ if (Ti.Platform.osname == 'iphone' || Ti.Platform.osname == 'ipad') {
 		tabs.tabGroup.open();
 	});
 	
+	Ti.App.addEventListener('app:venue.listing', function(e) {
+		//Ti.API.log('rebuilding the venue listing page');
+		//Ti.API.log(nav.venues.children);
+		windows.venues.show();
+		var VenueList = require('ui/killStack').venueStack;
+		var venueList = new VenueList(nav);	
+		
+	});
+	
+	// This function redraws the venue information page once the data has been changed
+	Ti.App.addEventListener('app:redraw.venue', function(e) {
+		//Ti.API.log('rebuilding the venue information page');
+		
+		windows.venues.hide();
+		var VenueList = require('ui/killStack').venueStack;
+		var venueList = new VenueList(nav);
+		Ti.API.log(windows.venues.children);
+		
+		var redrawTimer = setTimeout(function() {
+			var VenueInfo = require('views/venues/venueInfo').VenueInfo;
+			var venueInfo = new VenueInfo(nav, tabs, e.location);
+			//Ti.API.log('getting the venue');
+			
+			nav.venuesWindowStack.push(venueInfo);
+			nav.venues.open(venueInfo);
+			//Ti.API.log('adding the venue');
+		}, 400);
+		
+	});
+	
 })();
 // end of app code :P
