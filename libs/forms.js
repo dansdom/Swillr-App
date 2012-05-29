@@ -53,7 +53,8 @@ var setupPickerTextField = function(textField, pickerType, data) {
 	textField.editable = false;
 	textField.rightButton = Ti.UI.createButton({
 		style: Ti.UI.iPhone.SystemButton.DISCLOSURE,
-		transform: Ti.UI.create2DMatrix().rotate(90)
+		transform: Ti.UI.create2DMatrix().rotate(90),
+		opacity : 0.2
 	});
 	textField.rightButtonMode = Ti.UI.INPUT_BUTTONMODE_ALWAYS;
 	
@@ -132,22 +133,17 @@ var addField = function(field, fieldRefs) {
 			setupPickerTextField(fieldObject, Ti.UI.PICKER_TYPE_PLAIN, field.data);
 		}
 	} else if (type === exports.TYPE_SUBMIT) {
-		var button = Ti.UI.createButton({
-			title : title,
-			height : '40dp',
-			width : '250dp',
-			top : '20dp',
-			bottom : '10dp',
-			backgroundSelectedColor : '#C8B9B2'
-		});
-		button.addEventListener('click', function(e) {
+		var submitEvent = function() {
 			var values = {};
 			for (var i in fieldRefs) {
 				values[i] = fieldRefs[i].value;	
 			}
 			form.fireEvent(id, {values:values});	
-		});	
-		form.container.add(button);
+		};
+		// get the btn view
+		var SubmitBtn = require('ui/btn').Btn;
+		var submitBtn = new SubmitBtn(title, submitEvent);
+		form.container.add(submitBtn.view);
 	}
 	
 	// Add our prepared UI component to the form

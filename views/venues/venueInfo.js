@@ -22,15 +22,13 @@ exports.VenueInfo = function(nav, tabs, location) {
 		leftNavButton : backButton,
 		//rightNavButton : editButton,
 		barColor: '#1E0B02'
-		//backgroundImage : 'img/bg2.png',
-		//backgroundRepeat : true
 	});
 	
 	var tableView = Ti.UI.createTableView({
 		data : [],
 		style: Ti.UI.iPhone.TableViewStyle.GROUPED,
 		backgroundColor : 'transparent',
-		separatorColor : '#ccc',
+		separatorColor : '#bbb',
 		left : '5dp',
 		right : '5dp',
 		top : '0dp',
@@ -106,7 +104,7 @@ exports.VenueInfo = function(nav, tabs, location) {
 					title : '',
 					color : '#000',
 					backgroundColor : '#fff',
-					selectedBackgroundColor : '#C8B9B2'
+					selectedBackgroundColor : '#f2ddc4'
 				});
 				var eventHeaderView = {
 					view : Ti.UI.createView({
@@ -126,8 +124,9 @@ exports.VenueInfo = function(nav, tabs, location) {
 						font : {fontFamily : 'News Cycle', fontSize : 15}
 					}),
 					rightButton : Ti.UI.createButton({
-						style:Titanium.UI.iPhone.SystemButton.DISCLOSURE,
-						right : '5dp'
+						style : Titanium.UI.iPhone.SystemButton.DISCLOSURE,
+						right : '5dp',
+						opacity : '0.2'
 					}),
 					createView : function(eventInfo, index) {
 						this.view.add(this.day);
@@ -161,7 +160,7 @@ exports.VenueInfo = function(nav, tabs, location) {
 							title : '',
 							color : '#000',
 							backgroundColor : '#fff',
-							selectedBackgroundColor : '#C8B9B2',
+							selectedBackgroundColor : '#f2ddc4',
 							editable : true
 						});
 						dealView = {
@@ -180,8 +179,6 @@ exports.VenueInfo = function(nav, tabs, location) {
 								font : {fontFamily : 'News Cycle', fontSize : 16}
 							}),
 							createView : function(deal, eventIndex, dealIndex) {
-								//Ti.API.log(deal);
-								//Ti.API.log('I am adding a deal');
 								this.view.add(this.desc);
 								this.view.addEventListener('click', function() {
 									// need to fill these forms out
@@ -206,7 +203,7 @@ exports.VenueInfo = function(nav, tabs, location) {
 					height : 38,
 					title : '',
 					backgroundColor : '#fff',
-					selectedBackgroundColor : '#C8B9B2'
+					selectedBackgroundColor : '#f2ddc4'
 				});
 				
 				var addDealView = {
@@ -222,7 +219,8 @@ exports.VenueInfo = function(nav, tabs, location) {
 					}),
 					rightButton : Ti.UI.createButton({
 						style:Titanium.UI.iPhone.SystemButton.CONTACT_ADD,
-						right : '5dp'
+						right : '5dp',
+						opacity : '0.2'
 					}),
 					createView : function(index) {
 						this.view.add(this.addLabel);
@@ -252,7 +250,7 @@ exports.VenueInfo = function(nav, tabs, location) {
 		addBtn : Ti.UI.createTableViewRow({
 			color : '#000',
 			backgroundColor : '#fff',
-			selectedBackgroundColor : '#C8B9B2'
+			selectedBackgroundColor : '#f2ddc4'
 		}),
 		addBtnView : Ti.UI.createView({
 			layout : 'absolute',
@@ -263,12 +261,13 @@ exports.VenueInfo = function(nav, tabs, location) {
 		}),
 		addBtnAction : Ti.UI.createButton({
 			style:Titanium.UI.iPhone.SystemButton.CONTACT_ADD,
-			right : '5dp'
+			right : '5dp',
+			opacity : '0.2'
 		}),
 		editBtn : Ti.UI.createTableViewRow({
 			color : '#000',
 			backgroundColor : '#fff',
-			selectedBackgroundColor : '#C8B9B2'
+			selectedBackgroundColor : '#f2ddc4'
 		}),
 		editBtnView : Ti.UI.createView({
 			layout : 'absolute',
@@ -277,14 +276,10 @@ exports.VenueInfo = function(nav, tabs, location) {
 		editBtnLabel : Ti.UI.createLabel({
 			text : 'Edit This Venue'
 		}),
-		editBtnAction : Ti.UI.createButton({
-			style:Titanium.UI.iPhone.SystemButton.CONTACT_ADD,
-			right : '5dp'
-		}),
 		saveBtn : Ti.UI.createTableViewRow({
 			color : '#000',
 			backgroundColor : '#fff',
-			selectedBackgroundColor : '#C8B9B2'
+			selectedBackgroundColor : '#f2ddc4'
 		}),
 		saveBtnView : Ti.UI.createView({
 			layout : 'absolute',
@@ -292,10 +287,6 @@ exports.VenueInfo = function(nav, tabs, location) {
 		}),
 		saveBtnLabel : Ti.UI.createLabel({
 			text : 'Save event'
-		}),
-		saveBtnAction : Ti.UI.createButton({
-			style:Titanium.UI.iPhone.SystemButton.CONTACT_ADD,
-			right : '5dp'
 		}),
 		saveBtnView : Ti.UI.createView({
 			layout : 'absolute',
@@ -306,10 +297,8 @@ exports.VenueInfo = function(nav, tabs, location) {
 			this.addBtnView.add(this.addBtnAction);
 			this.addBtn.add(this.addBtnView);
 			this.editBtnView.add(this.editBtnLabel);
-			//this.editBtnView.add(this.editBtnAction);
 			this.editBtn.add(this.editBtnView);
 			this.saveBtnView.add(this.saveBtnLabel);
-			this.saveBtnView.add(this.saveBtnAction);
 			this.saveBtn.add(this.saveBtnView);
 			this.section.add(this.addBtn);
 			this.section.add(this.editBtn);

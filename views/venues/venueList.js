@@ -39,7 +39,7 @@ exports.VenueList = function(nav, tabs, windows, data) {
 			
 			sectionData[sectionNumber].headerView = Ti.UI.createView({
 				layout : 'absolute',
-				backgroundColor : '#C8B9B2',
+				backgroundColor : '#f2ddc4',
 				height : '24dp'
 			});
 			
@@ -47,7 +47,7 @@ exports.VenueList = function(nav, tabs, windows, data) {
 				height : '1dp',
 				width : '100%',
 				top : '0dp',
-				backgroundColor : '#eee'
+				backgroundColor : '#fcf1e3'
 			});
 			var headerLabel = Ti.UI.createLabel({
 				text : header,
@@ -55,15 +55,15 @@ exports.VenueList = function(nav, tabs, windows, data) {
 				color : '#fff',
 				left : '10dp',
 				height : 'auto',
-				shadowColor : '#777',
-				shadowOffset : {x:0, y:1},
+				shadowColor : '#555',
+				shadowOffset : {x : 1, y : 1},
 				font : {fontWeight : 'bold', fontSize : '18dp', fontFamily : 'Helvetica Neue'}
 			});
 			var bottomLine = Ti.UI.createView({
 				height : '1dp',
 				width : '100%',
 				bottom : '0dp',
-				backgroundColor : '#888'
+				backgroundColor : '#B0795F'
 			});
 			
 			sectionData[sectionNumber].headerView.add(topLine);
@@ -84,7 +84,20 @@ exports.VenueList = function(nav, tabs, windows, data) {
 			fontSize : 24,
 			color : '#000',
 			backgroundColor : '#fff',
-			selectedBackgroundColor : '#C8B9B2'
+			backgroundGradient: {
+				type:'linear',
+				colors:[
+					{color : '#fff', offset : 0},
+					{color : '#fff', offset : 1.0}
+			]},
+	    	selectedBackgroundGradient: {
+				type:'linear',
+				colors:[
+					{color : '#fff', offset : 0},
+					{color : '#fff', offset : 0.2},
+					{color : '#f2ddc4', offset : 0.8},
+					{color : '#f2ddc4', offset : 1.0}
+			]}
 		});
 
 		// define the view for the list
@@ -113,13 +126,11 @@ exports.VenueList = function(nav, tabs, windows, data) {
 				font : {fontSize : '12dp'},
 				textAlign : 'left',
 				width : 'auto',
-				height : 'auto',
-				backgroundColor : '#fff'
+				height : 'auto'
 			}),
 			view : Ti.UI.createView({
 				layout : 'horizontal',
-				height : 'auto',
-				backgroundColor : '#fff'
+				height : 'auto'
 			}),
 			createView : function() {
 				this.itemText.add(this.from);
@@ -153,7 +164,7 @@ exports.VenueList = function(nav, tabs, windows, data) {
 		index : searchIndex,
 		backgroundColor : 'transparent',
 		filterAttribute: 'venueData',
-		separatorColor : '#c6c1b3'
+		separatorColor : '#cca18d'
 	});
 	
 	// add the data to the table

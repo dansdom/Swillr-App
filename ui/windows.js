@@ -25,7 +25,7 @@ exports.Windows = function() {
 	});
 	
 	var updateMapBtn = Titanium.UI.createButton({
-		title : 'Update',
+		title : 'Update Times',
 		height : '55dp',
 		style : Titanium.UI.iPhone.SystemButtonStyle.BORDERED
 	});

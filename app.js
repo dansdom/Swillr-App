@@ -10,8 +10,9 @@
 // medium brown : #561F06
 // dark blue: #063D56
 // medium blue : #096590
-// very light color : #F4DDD2
-
+// gold top : fcf1e3
+// gold : #f2ddc4
+// deep gold :  #cf9836
 // Facebook app ID: 382696298430425
 //Ti.Facebook.appid = "382696298430425";
 //Titanium.Facebook.permissions = ["publish_stream", "email", "offline_access", "user_interests", "user_birthday", "user_activities", "user_hometown", "user_location", "user_relationships", "user_relationship_details", "friends_location", "friends_birthday", "friends_hometown", "friends_relationships", "friends_relationship_details", "publish_actions"];

@@ -22,7 +22,7 @@ exports.Map = function(nav, tabs, geo, data) {
 	constructPin = function(venue) {
 		// get the image type
 		var eventLength = venue.events.length - 1;
-		//Ti.API.log(venue.events[eventLength]);
+		//Ti.API.log(venue);
 		var imageType;
 		switch (venue.events[eventLength].pin)
 		{
@@ -46,7 +46,7 @@ exports.Map = function(nav, tabs, geo, data) {
 			latitude : venue.latitude,
 			longitude : venue.longitude,
 			title : venue.title,
-			subtitle : venue.address,
+			subtitle : venue.events[0].timeDescription,
 			pincolor : Titanium.Map.ANNOTATION_BLUE,
 			image : imageType,
 			animate : false,

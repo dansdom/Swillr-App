@@ -47,6 +47,15 @@ exports.createSemiModalPicker = function(o) {
 	}
 	picker.addEventListener('change', function(e) {});
 	
+	// using the custom button module
+	var cancelEvent = function() {
+		modalWin.close();
+	};
+	var Btn = require('ui/btn').Btn;
+	var cancelBtn = new Btn('Cancel', cancelEvent, '80dp', '30dp');
+	cancelBtn.view.setLeft(10);
+	cancelBtn.view.setTop('auto');
+	/*
 	var cancel =  Titanium.UI.createButton({
 		title:'Cancel',
 		height: 30,
@@ -57,7 +66,25 @@ exports.createSemiModalPicker = function(o) {
 	cancel.addEventListener('click', function(e) {
 		modalWin.close();
 	});
-	 
+	*/
+	
+	var doneEvent = function(e) {
+		if (type === Ti.UI.PICKER_TYPE_DATE) {
+			o.textField.value = dateToString(picker.value);
+		} else if (type === Ti.UI.PICKER_TYPE_TIME) {
+			o.textField.value = timeToString(picker.value);
+		} else {
+			o.textField.value = picker.getSelectedRow(0).title;	
+		}
+		modalWin.close();
+	};
+	
+	// using the custom button module
+	var Btn = require('ui/btn').Btn;
+	var doneBtn = new Btn('Done', doneEvent, '80dp', '30dp');
+	doneBtn.view.setRight(10);
+	doneBtn.view.setTop('auto');
+	/* 
 	var done =  Titanium.UI.createButton({
 		title:'Done',
 		height: 30,
@@ -76,6 +103,7 @@ exports.createSemiModalPicker = function(o) {
 		}
 		modalWin.close();
 	});
+	*/
 	 
 	var spacer =  Titanium.UI.createButton({
 		systemButton:Titanium.UI.iPhone.SystemButton.FLEXIBLE_SPACE
@@ -83,11 +111,11 @@ exports.createSemiModalPicker = function(o) {
 	 
 	var toolbar = Ti.UI.createView({
 		height: 43,
-		backgroundColor: '#bbb'
+		backgroundColor: '#1E0B02'
 	});
 	 
-	toolbar.add(cancel);
-	toolbar.add(done);
+	toolbar.add(cancelBtn.view);
+	toolbar.add(doneBtn.view);
 	container.add(toolbar);
 	container.add(picker);
 	modalWin.add(overlay);

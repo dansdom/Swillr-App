@@ -52,6 +52,9 @@ exports.AddDeal = function(nav, tabs, location, index) {
 			e.location = location;
 			Ti.App.fireEvent('app:redraw.venue', e);
 		}
+		else {
+			alert('Please enter a deal');
+		}
 	});
 	
 	pageView.add(dealForm);
