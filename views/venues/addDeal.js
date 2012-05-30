@@ -9,7 +9,7 @@ exports.AddDeal = function(nav, tabs, location, index) {
 	
 	var page = Ti.UI.createWindow({
 		title : 'Add Deal',
-		backButtonTitle : 'back',
+		backButtonTitle : 'Back',
 		rightNavButton : cancelButton,
 		barColor: '#1E0B02'
 	});

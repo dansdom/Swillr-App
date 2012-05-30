@@ -9,7 +9,7 @@ exports.EditDeal = function(nav, tabs, deal, location, eventIndex, dealIndex) {
 	
 	var page = Ti.UI.createWindow({
 		title : 'Edit Deal',
-		backButtonTitle : 'back',
+		backButtonTitle : 'Back',
 		rightNavButton : cancelButton,
 		barColor: '#1E0B02'
 	});

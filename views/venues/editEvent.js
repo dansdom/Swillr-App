@@ -9,7 +9,7 @@ exports.EditEvent = function(nav, tabs, eventInfo, location, eventIndex) {
 	
 	var page = Ti.UI.createWindow({
 		title : 'Edit Event',
-		backButtonTitle : 'back',
+		backButtonTitle : 'Back',
 		rightNavButton : cancelButton,
 		barColor: '#1E0B02'
 	});

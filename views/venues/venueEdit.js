@@ -20,7 +20,7 @@ exports.VenueEdit = function(nav, tabs, location) {
 	
 	var page = Ti.UI.createWindow({
 		title : 'Edit Venue',
-		backButtonTitle : 'back',
+		backButtonTitle : 'Back',
 		rightNavButton : cancelButton,
 		barColor: '#1E0B02'
 	});

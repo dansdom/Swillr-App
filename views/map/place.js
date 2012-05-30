@@ -38,7 +38,7 @@ exports.Place = function(nav, tabs, location) {
 			text : location.address,
 			height : 'auto',
 			width : 'auto',
-			top : '-8dp',
+			top : '-6dp',
 			font : {fontFamily : 'News Cycle', fontSize : 14}
 		}),
 		createView : function() {

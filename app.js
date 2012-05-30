@@ -5,6 +5,8 @@
 // 1. edit deal
 // 2. design stuff
 
+// Ti.UI.SIZE - display : inline
+// Ti.UI.FILL - display : block
 
 // deep brown: #1E0B02
 // medium brown : #561F06
