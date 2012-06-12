@@ -17,7 +17,7 @@ exports.Windows = function() {
 	var locateBtn = Titanium.UI.createButton({
 		title : '',
 		height : '55dp',
-		image : 'img/light/light_locate.png',
+		image : 'img/light_locate.png',
 		style : Titanium.UI.iPhone.SystemButtonStyle.BORDERED
 	});
 	locateBtn.addEventListener('click', function() {

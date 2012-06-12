@@ -5,12 +5,12 @@ exports.Tabs = function(windows, nav) {
 	// define the tabs for the tab group
 	var tabs = {
 		map : Ti.UI.createTab({  
-		    icon : 'img/light/light_locate.png',
+		    icon : 'img/light_locate.png',
 		    title : 'Map',
 		    window : windows.navWindowMap
 		}),
 		venues : Ti.UI.createTab({  
-		    icon : 'img/light/light_list-add.png',
+		    icon : 'img/light_list-add.png',
 		    title : 'Venues',		    
 		    window : windows.navWindowVenues
 		}),

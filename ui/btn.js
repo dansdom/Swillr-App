@@ -20,7 +20,7 @@ exports.Btn = function(value, callback, btnWidth, btnHeight) {
 			height : '100%',
 			width : '100%',
 			border : 1,
-			borderColor : '#561F06',
+			borderColor : '#1E0B02',
 			borderRadius : '10dp',
 			style : Titanium.UI.iPhone.SystemButtonStyle.PLAIN,
 			backgroundColor : 'transparent',			
@@ -28,8 +28,10 @@ exports.Btn = function(value, callback, btnWidth, btnHeight) {
 				type:'linear',
 				colors:[
 					{color : '#fcf1e3', offset : 0},
-					{color : '#cf9836', offset : 0.2},
-					{color : '#561F06', offset : 1.0}
+					{color : '#cf9836', offset : 0.05},
+					{color : '#561F06', offset : 0.4},
+					{color : '#1E0B02', offset : 0.8},
+					{color : '#1E0B02', offset : 1.0}
 			]}			
 		}),
 		label : Ti.UI.createLabel({
@@ -72,8 +74,10 @@ exports.Btn = function(value, callback, btnWidth, btnHeight) {
 					type:'linear',
 					colors:[
 						{color : '#fcf1e3', offset : 0},
-						{color : '#cf9836', offset : 0.2},
-						{color : '#561F06', offset : 1.0}
+						{color : '#cf9836', offset : 0.05},
+						{color : '#561F06', offset : 0.4},
+						{color : '#1E0B02', offset : 0.8},
+						{color : '#1E0B02', offset : 1.0}
 				]});
 				btn.label.setShadowColor('#1E0B02');
 				btn.label.setColor('#fff');

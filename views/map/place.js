@@ -5,7 +5,7 @@ exports.Place = function(nav, tabs, location) {
 	
 	var page = Ti.UI.createWindow({
 		title : 'The Deal',
-		backButtonTitle : 'back',
+		backButtonTitle : 'Back',
 		barColor: '#1E0B02',
 		backgroundImage : 'img/bg2.png',
 		backgroundRepeat : true
