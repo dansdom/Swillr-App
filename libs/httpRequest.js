@@ -26,11 +26,10 @@ exports.HttpRequest = function(type, url, data, callback, args) {
 		timeout : 60000  /* in milliseconds */
 	});
 	
-	//Ti.API.log('is there any data?');
-	// This sends the user agent data back to the server
-	client.setRequestHeader('User-Agent', Ti.userAgent);
 	// Prepare the connection.
 	client.open(type, url);
+	// This sends the user agent data back to the server
+	client.setRequestHeader('User-Agent', Ti.userAgent);
 	
 	// I will need to set the request header here if I need it
 	if (!data) {

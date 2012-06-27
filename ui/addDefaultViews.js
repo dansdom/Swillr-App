@@ -13,6 +13,7 @@ exports.DefaultViews = function(windows, nav, tabs) {
 			windows.map.add(new map(nav, tabs, position, data));
 		};
 		//Ti.API.log('making the map ..');
+		// I need to put an alert to ask people for their location
 		var Geo = require('libs/geolocation').Geo;
 		var geo = Geo(makeMapView);
 	};
